@@ -287,8 +287,8 @@ input:checked + .toggle-slider::before { transform:translateX(22px); }
 <div class="data-row">
   <div class="data-tag"><span class="dot"></span> BTC: CoinGecko + Binance</div>
   <div class="data-tag"><span class="dot"></span> MSTR: Finnhub · 780,897 BTC · 346.8M shares</div>
-  <div class="data-tag"><span class="dot"></span> Metaplanet: Yahoo/Stooq/Finnhub · 40,177 BTC · 1.17B shares</div>
-  <div class="data-tag"><span class="dot"></span> ASST: Finnhub · 13,741 BTC · 69.2M shares</div>
+  <div class="data-tag"><span class="dot"></span> Metaplanet: Yahoo/Stooq/Finnhub · 40,177 BTC · 1.27B shares</div>
+  <div class="data-tag"><span class="dot"></span> ASST: Finnhub · 13,741 BTC · 59.3M shares (Class A basic)</div>
 </div>
 
 <!-- STATS ROW -->
@@ -388,7 +388,7 @@ input:checked + .toggle-slider::before { transform:translateX(22px); }
   <!-- Metaplanet -->
   <div class="company-panel meta-panel">
     <div class="company-name meta-color">Metaplanet</div>
-    <div class="company-meta">TSE: 3350.T · 40,177 BTC · 1.17B shares</div>
+    <div class="company-meta">TSE: 3350.T · 40,177 BTC · 1.27B shares</div>
     <div class="mini-stats">
       <div class="mini-stat"><div class="label">1× mNAV</div><div class="val green-color" id="meta1xLive">—</div></div>
       <div class="mini-stat"><div class="label">2.5× mNAV</div><div class="val yellow-color" id="meta25xLive">—</div></div>
@@ -419,7 +419,7 @@ input:checked + .toggle-slider::before { transform:translateX(22px); }
   <!-- ASST -->
   <div class="company-panel asst-panel">
     <div class="company-name asst-color">Strive (ASST)</div>
-    <div class="company-meta">NASDAQ: ASST · 13,741 BTC · 69.2M shares</div>
+    <div class="company-meta">NASDAQ: ASST · 13,741 BTC · 59.3M shares (Class A basic)</div>
     <div class="mini-stats">
       <div class="mini-stat"><div class="label">1× mNAV</div><div class="val green-color" id="asst1xLive">—</div></div>
       <div class="mini-stat"><div class="label">2.5× mNAV</div><div class="val yellow-color" id="asst25xLive">—</div></div>
@@ -678,8 +678,8 @@ input:checked + .toggle-slider::before { transform:translateX(22px); }
 // ASSET CONSTANTS
 // ══════════════════════════════════════════════
 const MSTR_DATA = { btc:780897,  shares:346819000 };
-const META_DATA = { btc:40177,   shares:1170000000 };
-const ASST_DATA = { btc:13741,   shares:69209119 };
+const META_DATA = { btc:40177,   shares:1270000000 }; // Updated Apr 2026 (was 1.17B, now 1.27B after new share issuances)
+const ASST_DATA = { btc:13741,   shares:59312566 };   // Class A basic shares only (matches official mNAV calculation)
 
 // ══════════════════════════════════════════════
 // STATE
