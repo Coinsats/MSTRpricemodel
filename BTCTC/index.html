@@ -665,6 +665,197 @@ input:checked + .toggle-slider::before { transform:translateX(22px); }
 
 </div><!-- end simulator -->
 
+<!-- ══ BITCOIN PRICE PREDICTION MODELS ══ -->
+<div id="btcPredictionSection" style="margin-top:32px">
+
+  <div class="section-header" style="margin-bottom:18px">
+    <span class="section-dot" style="background:var(--btc)"></span>
+    Bitcoin Price Prediction Models — 2029 Cycle
+  </div>
+
+  <!-- ── CYCLE TIMELINE BAR ── -->
+  <div style="background:var(--surface);border:1px solid var(--border-bright);border-radius:16px;padding:24px 26px;margin-bottom:20px;position:relative;overflow:hidden">
+    <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(247,147,26,0.5),transparent)"></div>
+
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:20px">
+      <div>
+        <div style="font-family:var(--sans);font-size:16px;font-weight:700;margin-bottom:4px">🕐 Bull Market Cycle Timeline</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted)">Zubair's Halving Cycle Analysis · Oct 2025 → Sep 2029</div>
+      </div>
+      <div style="display:flex;gap:20px;flex-wrap:wrap">
+        <div style="text-align:right">
+          <div style="font-family:var(--mono);font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px">Bear Complete</div>
+          <div style="font-family:var(--mono);font-size:24px;font-weight:600;color:var(--yellow);line-height:1.1" id="bearPctLabel">—</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-family:var(--mono);font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px">Days to Bottom</div>
+          <div style="font-family:var(--mono);font-size:24px;font-weight:600;color:var(--btc);line-height:1.1" id="daysUntilBottom">—</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-family:var(--mono);font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px">Days to Bull Run</div>
+          <div style="font-family:var(--mono);font-size:24px;font-weight:600;color:var(--green);line-height:1.1" id="daysUntilBull">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase labels -->
+    <div style="display:flex;margin-bottom:5px">
+      <div style="flex:368;font-family:var(--mono);font-size:9px;color:var(--yellow);text-align:center;letter-spacing:0.5px;text-transform:uppercase">◀ BEAR / ACCUMULATION ▶</div>
+      <div style="flex:1058;font-family:var(--mono);font-size:9px;color:var(--green);text-align:center;letter-spacing:0.5px;text-transform:uppercase">◀ BULL RUN ▶</div>
+    </div>
+
+    <!-- Bar -->
+    <div style="position:relative;height:32px;border-radius:8px;display:flex">
+      <div id="bearPhaseBar" style="flex:368;background:linear-gradient(90deg,rgba(245,197,66,0.12),rgba(245,197,66,0.28));border-right:2px solid rgba(245,197,66,0.7);border-radius:8px 0 0 8px;position:relative;overflow:visible">
+        <div id="cycleMarker" style="position:absolute;top:-5px;bottom:-5px;width:3px;background:#fff;border-radius:3px;box-shadow:0 0 12px rgba(255,255,255,0.95);transition:left 0.6s cubic-bezier(0.34,1.56,0.64,1);left:0%">
+          <div style="position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:8px;white-space:nowrap;color:var(--text)">TODAY</div>
+        </div>
+      </div>
+      <div style="flex:1058;background:linear-gradient(90deg,rgba(34,212,122,0.1),rgba(34,212,122,0.25));border-radius:0 8px 8px 0;position:relative;display:flex;align-items:center;justify-content:flex-end;padding-right:12px">
+        <span style="font-family:var(--mono);font-size:9px;color:rgba(34,212,122,0.55);letter-spacing:0.5px">🎯 AUG–SEP 2029</span>
+      </div>
+    </div>
+
+    <!-- Date labels -->
+    <div style="display:flex;justify-content:space-between;margin-top:26px;flex-wrap:wrap;gap:4px">
+      <div style="font-family:var(--mono);font-size:9px;color:var(--text-muted)">Oct 6, 2025<br><span style="color:var(--yellow)">▲ Bear Start</span></div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--text-muted);text-align:center">Oct 9, 2026<br><span style="color:var(--btc)">▼ Cycle Bottom</span></div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--text-muted);text-align:center">Oct 10, 2026<br><span style="color:var(--green)">▲ Bull Run Starts</span></div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--text-muted);text-align:right">Aug 23 – Sep 10, 2029<br><span style="color:var(--meta)">🏁 Cycle Top</span></div>
+    </div>
+
+    <div id="cycleStatusPill" style="margin-top:16px;padding:11px 16px;border-radius:8px;font-family:var(--mono);font-size:11px;background:rgba(245,197,66,0.07);border:1px solid rgba(245,197,66,0.2);color:var(--yellow);line-height:1.5">
+      📍 Loading cycle position…
+    </div>
+  </div>
+
+  <!-- ── THREE MODEL CARDS ── -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px;margin-bottom:20px">
+
+    <div style="background:var(--surface);border:1px solid rgba(247,147,26,0.3);border-radius:14px;padding:20px;position:relative;overflow:hidden">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--btc),rgba(247,147,26,0.2))"></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div style="width:36px;height:36px;background:rgba(247,147,26,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px">📐</div>
+        <div style="flex:1">
+          <div style="font-family:var(--sans);font-size:13px;font-weight:700;color:var(--btc)">Power Law Corridor</div>
+          <div style="font-family:var(--mono);font-size:9px;color:var(--text-muted)">H.C. Burger · Log-log regression</div>
+        </div>
+        <div style="padding:3px 8px;background:rgba(34,212,122,0.12);border:1px solid rgba(34,212,122,0.3);border-radius:4px;font-family:var(--mono);font-size:9px;color:var(--green)">#1 BEST</div>
+      </div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);line-height:1.65;margin-bottom:14px">BTC price follows a <strong style="color:var(--text)">power law with time</strong> since genesis block. On a log-log scale the corridor has never been broken since 2010. Most statistically robust long-term model.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
+        <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center">
+          <div style="font-family:var(--mono);font-size:8px;color:var(--text-muted);margin-bottom:3px">2029 FLOOR</div>
+          <div style="font-family:var(--mono);font-size:13px;font-weight:600;color:var(--green)">$250K</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center">
+          <div style="font-family:var(--mono);font-size:8px;color:var(--text-muted);margin-bottom:3px">FAIR VALUE</div>
+          <div style="font-family:var(--mono);font-size:13px;font-weight:600;color:var(--yellow)">$500K</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center">
+          <div style="font-family:var(--mono);font-size:8px;color:var(--text-muted);margin-bottom:3px">CEILING</div>
+          <div style="font-family:var(--mono);font-size:13px;font-weight:600;color:var(--red)">$1M+</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid rgba(155,93,229,0.3);border-radius:14px;padding:20px;position:relative;overflow:hidden">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--meta),rgba(155,93,229,0.2))"></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div style="width:36px;height:36px;background:rgba(155,93,229,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px">⏳</div>
+        <div style="flex:1">
+          <div style="font-family:var(--sans);font-size:13px;font-weight:700;color:var(--meta)">Halving Cycle Analysis</div>
+          <div style="font-family:var(--mono);font-size:9px;color:var(--text-muted)">Zubair's model · Apr 2024 halving</div>
+        </div>
+        <div style="padding:3px 8px;background:rgba(155,93,229,0.12);border:1px solid rgba(155,93,229,0.3);border-radius:4px;font-family:var(--mono);font-size:9px;color:var(--meta)">#2 TIMING</div>
+      </div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);line-height:1.65;margin-bottom:14px">Each halving triggers a multi-year cycle. Based on prior patterns: <strong style="color:var(--text)">bottom Oct 9, 2026</strong> → bull run Oct 10 → <strong style="color:var(--text)">cycle top Aug–Sep 2029</strong>. Best model for timing entries and exits.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+        <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:8px">
+          <div style="font-family:var(--mono);font-size:8px;color:var(--text-muted);margin-bottom:3px">HALVING DATE</div>
+          <div style="font-family:var(--mono);font-size:11px;font-weight:600;color:var(--meta)">Apr 20, 2024</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:8px">
+          <div style="font-family:var(--mono);font-size:8px;color:var(--text-muted);margin-bottom:3px">CYCLE BOTTOM</div>
+          <div style="font-family:var(--mono);font-size:11px;font-weight:600;color:var(--yellow)">Oct 9, 2026</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:8px">
+          <div style="font-family:var(--mono);font-size:8px;color:var(--text-muted);margin-bottom:3px">BULL RUN START</div>
+          <div style="font-family:var(--mono);font-size:11px;font-weight:600;color:var(--green)">Oct 10, 2026</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:8px">
+          <div style="font-family:var(--mono);font-size:8px;color:var(--text-muted);margin-bottom:3px">CYCLE TOP</div>
+          <div style="font-family:var(--mono);font-size:11px;font-weight:600;color:var(--btc)">Aug–Sep 2029</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── POWER LAW INTERACTIVE CHART ── -->
+  <div style="background:var(--surface);border:1px solid rgba(247,147,26,0.2);border-radius:16px;padding:24px;margin-bottom:20px;position:relative;overflow:hidden">
+    <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(247,147,26,0.4),transparent)"></div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:16px">
+      <div>
+        <div style="font-family:var(--sans);font-size:15px;font-weight:700;margin-bottom:3px">Power Law Corridor — Interactive Chart (2012–2030)</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted)">Log-log scale · Genesis: Jan 3, 2009 · Formula: log₁₀(P) = 5.84 × log₁₀(days) + k · Hover for values</div>
+      </div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:2px;background:var(--green);border-radius:2px"></div><span style="font-family:var(--mono);font-size:9px;color:var(--text-muted)">Floor</span></div>
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:2px;background:var(--btc);border-radius:2px"></div><span style="font-family:var(--mono);font-size:9px;color:var(--text-muted)">Fair Value</span></div>
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:2px;background:var(--red);border-radius:2px"></div><span style="font-family:var(--mono);font-size:9px;color:var(--text-muted)">Ceiling</span></div>
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:2px;background:rgba(255,255,255,0.65);border-radius:2px"></div><span style="font-family:var(--mono);font-size:9px;color:var(--text-muted)">BTC History</span></div>
+      </div>
+    </div>
+    <div style="position:relative;height:380px"><canvas id="powerLawChart"></canvas></div>
+    <div style="margin-top:12px;padding:10px 14px;background:rgba(247,147,26,0.05);border:1px solid rgba(247,147,26,0.15);border-radius:8px;font-family:var(--mono);font-size:10px;color:var(--text-muted);line-height:1.6">
+      ℹ️ Current BTC: <span id="plCurrentPrice" style="color:var(--btc);font-weight:600">loading…</span> · <span id="plCurrentZone" style="color:var(--yellow)">calculating position…</span>. The Power Law corridor has never been violated since 2010. The 2029 cycle top is projected between the Fair Value and Ceiling bands.
+    </div>
+  </div>
+
+  <!-- ── 2029 CYCLE TOP TARGET PRICES ── -->
+  <div style="margin-bottom:22px">
+    <div class="section-header" style="margin-bottom:14px">
+      <span class="section-dot" style="background:var(--btc)"></span>
+      2029 Cycle Top — BTC Price Targets
+      <span style="font-family:var(--mono);font-size:10px;color:var(--text-muted);font-weight:400;margin-left:8px">Aug 23 – Sep 10, 2029 · Based on 3 Models</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+
+      <div style="background:rgba(34,212,122,0.04);border:1px solid rgba(34,212,122,0.2);border-radius:14px;padding:22px;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--green);opacity:0.5"></div>
+        <div style="font-size:22px;margin-bottom:8px">🐻</div>
+        <div style="font-family:var(--sans);font-size:14px;font-weight:700;color:var(--green);margin-bottom:3px">Bear Case</div>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--text-muted);margin-bottom:16px">Power Law floor (red line) · Aug 22, 2029</div>
+        <div id="bearTargetPrice" style="font-family:var(--mono);font-size:40px;font-weight:600;color:var(--green);letter-spacing:-1.5px;line-height:1;margin-bottom:6px">$158K</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--green);margin-bottom:14px" id="bearXfrom">— × from current</div>
+        <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:12px;font-family:var(--mono);font-size:9px;color:var(--text-muted);line-height:1.65">Institutional adoption slower than expected. Market respects Power Law support. Still a meaningful bull run from current levels.</div>
+      </div>
+
+      <div style="background:rgba(245,197,66,0.04);border:1px solid rgba(245,197,66,0.25);border-radius:14px;padding:22px;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--yellow);opacity:0.6"></div>
+        <div style="font-size:22px;margin-bottom:8px">⚖️</div>
+        <div style="font-family:var(--sans);font-size:14px;font-weight:700;color:var(--yellow);margin-bottom:3px">Base Case</div>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--text-muted);margin-bottom:16px">Power Law fair value (green line) · Aug 22, 2029</div>
+        <div id="baseTargetPrice" style="font-family:var(--mono);font-size:40px;font-weight:600;color:var(--yellow);letter-spacing:-1.5px;line-height:1;margin-bottom:6px">$444K</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--yellow);margin-bottom:14px" id="baseXfrom">— × from current</div>
+        <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:12px;font-family:var(--mono);font-size:9px;color:var(--text-muted);line-height:1.65">US Bitcoin reserve + global institutional adoption. Consistent with Power Law fair value for 2029 and prior cycle return compression.</div>
+      </div>
+
+      <div style="background:rgba(155,93,229,0.04);border:1px solid rgba(155,93,229,0.25);border-radius:14px;padding:22px;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--meta);opacity:0.6"></div>
+        <div style="font-size:22px;margin-bottom:8px">🚀</div>
+        <div style="font-family:var(--sans);font-size:14px;font-weight:700;color:var(--meta);margin-bottom:3px">Bull Case</div>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--text-muted);margin-bottom:16px">Power Law ceiling (purple line) · Aug 22, 2029</div>
+        <div id="bullTargetPrice" style="font-family:var(--mono);font-size:40px;font-weight:600;color:var(--meta);letter-spacing:-1.5px;line-height:1;margin-bottom:6px">$1.36M</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--meta);margin-bottom:14px" id="bullXfrom">— × from current</div>
+        <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:12px;font-family:var(--mono);font-size:9px;color:var(--text-muted);line-height:1.65">Nation-state accumulation + ETF inflows + corporate treasuries trigger supercycle. Power Law ceiling approached but not broken.</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end btcPredictionSection -->
+
 <!-- DISCLAIMER -->
 <div class="disclaimer">
   <span class="disc-icon">⚠</span>
@@ -1452,12 +1643,343 @@ ALLOC_KEYS.forEach(k => {
 });
 
 // ══════════════════════════════════════════════
+// CYCLE TIMELINE BAR
+// ══════════════════════════════════════════════
+function initCycleBar() {
+  const bearStart  = new Date('2025-10-06T00:00:00');
+  const bearEnd    = new Date('2026-10-09T23:59:59');
+  const bullStart  = new Date('2026-10-10T00:00:00');
+  const cycleTop   = new Date('2029-09-01T00:00:00'); // midpoint Aug23–Sep10
+  const now        = new Date();
+
+  const DAY = 86400000;
+  const totalBear  = bearEnd  - bearStart;  // 368 days in ms
+  const totalBull  = cycleTop - bullStart;  // ~1057 days in ms
+
+  const marker    = document.getElementById('cycleMarker');
+  const bearLbl   = document.getElementById('bearPctLabel');
+  const daysBot   = document.getElementById('daysUntilBottom');
+  const daysBull  = document.getElementById('daysUntilBull');
+  const pill      = document.getElementById('cycleStatusPill');
+
+  function fmt(n) { return n.toLocaleString(); }
+
+  if (now < bearStart) {
+    // Not started yet
+    marker.style.left = '0%';
+    bearLbl.textContent = '0%';
+    daysBot.textContent = Math.round((bearEnd - now) / DAY);
+    daysBull.textContent = Math.round((bullStart - now) / DAY);
+    pill.innerHTML = '⏳ The bear market has not started yet. Current phase: <strong>Pre-Bear</strong>.';
+    pill.style.cssText += 'background:rgba(59,130,246,0.07);border-color:rgba(59,130,246,0.2);color:var(--asst)';
+  } else if (now <= bearEnd) {
+    // Inside bear phase
+    const elapsed   = now - bearStart;
+    const bearPct   = Math.min(100, (elapsed / totalBear) * 100);
+    const dLeftBot  = Math.max(0, Math.round((bearEnd - now)   / DAY));
+    const dLeftBull = Math.max(0, Math.round((bullStart - now) / DAY));
+    marker.style.left = Math.min(96, bearPct).toFixed(1) + '%';
+    bearLbl.textContent = Math.round(bearPct) + '%';
+    daysBot.textContent  = fmt(dLeftBot);
+    daysBull.textContent = fmt(dLeftBull);
+    const phase = bearPct < 40 ? 'Early Accumulation' : bearPct < 75 ? 'Mid Accumulation' : 'Late Accumulation — Buy Zone';
+    pill.innerHTML = `📍 Bear market <strong>${Math.round(bearPct)}% complete</strong>. Phase: <strong>${phase}</strong>. ${dLeftBot} days until cycle bottom · ${dLeftBull} days until bull run. This is the best time to DCA and build your position.`;
+  } else if (now <= cycleTop) {
+    // Inside bull phase — marker moves off bear section conceptually
+    const bullElapsed = now - bullStart;
+    const bullPct = Math.min(100, (bullElapsed / totalBull) * 100);
+    const dLeftTop = Math.max(0, Math.round((cycleTop - now) / DAY));
+    marker.style.left = '97%'; // at far right of bear section = transition
+    bearLbl.textContent = '100%';
+    daysBot.textContent  = '0';
+    daysBull.textContent = '0';
+    pill.innerHTML = `🚀 <strong>BULL RUN ACTIVE</strong> — ${Math.round(bullPct)}% through the bull phase. ${fmt(dLeftTop)} days until projected cycle top (Aug–Sep 2029). Take profit in stages!`;
+    pill.style.cssText += 'background:rgba(34,212,122,0.07);border-color:rgba(34,212,122,0.25);color:var(--green)';
+  } else {
+    // After cycle top
+    bearLbl.textContent  = '100%';
+    daysBot.textContent  = '0';
+    daysBull.textContent = '0';
+    pill.innerHTML = '🏁 Cycle complete. Bear market and bull run have both concluded.';
+  }
+}
+
+// ══════════════════════════════════════════════
+// POWER LAW CHART
+// ══════════════════════════════════════════════
+function buildPowerLawChart() {
+  const genesis = new Date('2009-01-03T00:00:00');
+  const DAY_MS  = 86400000;
+
+  function daysFromGenesis(date) {
+    return Math.max(1, (date - genesis) / DAY_MS);
+  }
+  function pl(days, k) {
+    return Math.pow(10, 5.84 * Math.log10(days) + k);
+  }
+
+  // Generate monthly data points 2012-01 → 2030-12
+  const labels = [], floorD = [], fairD = [], ceilD = [];
+  for (let yr = 2012; yr <= 2030; yr++) {
+    for (let mo = 0; mo < 12; mo++) {
+      const d    = new Date(yr, mo, 1);
+      const days = daysFromGenesis(d);
+      const yDec = yr + mo / 12;
+      labels.push(yDec);
+      floorD.push(pl(days, -17.4451));
+      fairD.push( pl(days, -16.9951));
+      ceilD.push( pl(days, -16.5088));
+    }
+  }
+
+  // Historical BTC price data as scatter {x: decimal year, y: price}
+  const hist = [
+    {x:2012.0,  y:6},    {x:2013.0,  y:13},   {x:2013.25, y:230},
+    {x:2013.92, y:1150}, {x:2015.0,  y:150},  {x:2016.0,  y:430},
+    {x:2017.0,  y:1000}, {x:2017.96, y:19800},{x:2018.96, y:3200},
+    {x:2019.42, y:13800},{x:2020.0,  y:7200}, {x:2020.92, y:19800},
+    {x:2021.29, y:64000},{x:2021.87, y:69000},{x:2022.46, y:17600},
+    {x:2023.0,  y:16500},{x:2023.75, y:27000},{x:2024.0,  y:42000},
+    {x:2024.21, y:73800},{x:2024.58, y:58000},{x:2024.9,  y:99000},
+    {x:2025.05, y:109000},{x:2025.33,y:82000},{x:2025.75, y:96000},
+  ];
+
+  // Current BTC price dot (will be updated after fetch)
+  const now = new Date();
+  const curYear = now.getFullYear() + now.getMonth() / 12 + now.getDate() / 365;
+  hist.push({x: parseFloat(curYear.toFixed(2)), y: liveBtcPrice || 94000, isCurrent: true});
+
+  // Key target dots for 2029
+  const target2029 = [
+    {x: 2029.67, y: 250000},
+    {x: 2029.67, y: 500000},
+    {x: 2029.67, y: 1000000},
+  ];
+
+  function fmtPrice(v) {
+    if (!v || isNaN(v)) return '—';
+    if (v >= 1e6) return '$' + (v/1e6).toFixed(2) + 'M';
+    if (v >= 1e3) return '$' + Math.round(v/1000) + 'K';
+    return '$' + Math.round(v);
+  }
+
+  const ctx = document.getElementById('powerLawChart').getContext('2d');
+  charts.powerLaw = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        // Ceiling → Fair fill area
+        {
+          label: 'Ceiling',
+          data: ceilD,
+          borderColor: 'rgba(255,77,109,0.8)',
+          backgroundColor: 'rgba(155,93,229,0.06)',
+          borderWidth: 2,
+          pointRadius: 0,
+          fill: '+1',
+          tension: 0.1,
+          order: 3
+        },
+        // Fair value line
+        {
+          label: 'Fair Value',
+          data: fairD,
+          borderColor: 'rgba(247,147,26,0.9)',
+          backgroundColor: 'rgba(247,147,26,0.04)',
+          borderWidth: 2,
+          pointRadius: 0,
+          fill: '+1',
+          tension: 0.1,
+          order: 4
+        },
+        // Floor line
+        {
+          label: 'Floor',
+          data: floorD,
+          borderColor: 'rgba(34,212,122,0.85)',
+          backgroundColor: 'rgba(34,212,122,0.04)',
+          borderWidth: 2,
+          pointRadius: 0,
+          fill: false,
+          tension: 0.1,
+          order: 5
+        },
+        // Historical price scatter
+        {
+          label: 'BTC Price',
+          data: hist,
+          type: 'scatter',
+          parsing: false,
+          borderColor: 'rgba(255,255,255,0.8)',
+          backgroundColor: ctx => {
+            const raw = ctx.raw;
+            if (raw && raw.isCurrent) return 'rgba(247,147,26,1)';
+            return 'rgba(255,255,255,0.75)';
+          },
+          pointRadius: ctx => ctx.raw && ctx.raw.isCurrent ? 7 : 3,
+          pointHoverRadius: 6,
+          showLine: true,
+          borderWidth: 1.5,
+          order: 2
+        },
+        // 2029 target markers
+        {
+          label: '2029 Targets',
+          data: target2029,
+          type: 'scatter',
+          parsing: false,
+          borderColor: ['rgba(34,212,122,0.9)','rgba(245,197,66,0.9)','rgba(155,93,229,0.9)'],
+          backgroundColor: ['rgba(34,212,122,0.3)','rgba(245,197,66,0.3)','rgba(155,93,229,0.3)'],
+          pointRadius: 8,
+          pointStyle: 'triangle',
+          pointHoverRadius: 10,
+          showLine: false,
+          order: 1
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: 'rgba(8,8,16,0.97)',
+          borderColor: 'rgba(255,255,255,0.1)', borderWidth: 1,
+          titleColor: 'rgba(255,255,255,0.45)',
+          bodyColor: '#e8e8f0',
+          titleFont: { family: "'IBM Plex Mono'", size: 10 },
+          bodyFont: { family: "'IBM Plex Mono'", size: 11 },
+          padding: 10,
+          callbacks: {
+            title: items => {
+              const y = parseFloat(items[0].label || items[0].parsed?.x || 0);
+              const yr = Math.floor(y);
+              const mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][Math.round((y % 1) * 12)] || '';
+              return mo + ' ' + yr;
+            },
+            label: item => {
+              const v = typeof item.raw === 'object' ? item.raw.y : item.raw;
+              if (!v) return null;
+              return item.dataset.label + ': ' + fmtPrice(v);
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          type: 'linear',
+          min: 2012,
+          max: 2030.5,
+          grid: { color: 'rgba(255,255,255,0.04)' },
+          border: { color: 'transparent' },
+          ticks: {
+            color: 'rgba(232,232,240,0.3)',
+            font: { family: "'IBM Plex Mono'", size: 8 },
+            maxTicksLimit: 10,
+            callback: v => Number.isInteger(v) ? v : ''
+          }
+        },
+        y: {
+          type: 'logarithmic',
+          min: 1,
+          max: 5000000,
+          grid: { color: 'rgba(255,255,255,0.04)' },
+          border: { color: 'transparent' },
+          ticks: {
+            color: 'rgba(232,232,240,0.3)',
+            font: { family: "'IBM Plex Mono'", size: 8 },
+            callback: v => {
+              const nice = [1,10,100,1000,10000,100000,1000000,5000000];
+              if (!nice.includes(v)) return '';
+              if (v >= 1e6) return '$' + v/1e6 + 'M';
+              if (v >= 1e3) return '$' + v/1000 + 'K';
+              return '$' + v;
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
+// ══════════════════════════════════════════════
+// POWER LAW INFO + RAINBOW ZONE UPDATER
+// ══════════════════════════════════════════════
+function updatePLLabels() {
+  const cur = liveBtcPrice || 94000;
+
+  // ── Power Law k constants (calibrated against bitbo.io, verified Aug 22 2029) ──
+  const K_FLOOR = -17.4451; // Red line  → $157,534 on Aug 22, 2029
+  const K_FAIR  = -16.9951; // Green line → $443,991 on Aug 22, 2029
+  const K_CEIL  = -16.5088; // Purple line → $1,360,652 on Aug 22, 2029
+
+  // ── Today's Power Law zone ──
+  const genesis = new Date('2009-01-03T00:00:00');
+  const days    = (Date.now() - genesis) / 86400000;
+  const floorP  = Math.pow(10, 5.84 * Math.log10(days) + K_FLOOR);
+  const fairP   = Math.pow(10, 5.84 * Math.log10(days) + K_FAIR);
+  const ceilP   = Math.pow(10, 5.84 * Math.log10(days) + K_CEIL);
+  const fmtK    = v => v >= 1e6 ? '$' + (v/1e6).toFixed(2) + 'M' : '$' + Math.round(v/1000) + 'K';
+
+  // ── 2029 cycle top targets (Aug 22, 2029 = day 7536 from genesis) ──
+  const d2029      = 7536;
+  const bearTarget = Math.pow(10, 5.84 * Math.log10(d2029) + K_FLOOR); // ≈ $157,534
+  const baseTarget = Math.pow(10, 5.84 * Math.log10(d2029) + K_FAIR);  // ≈ $443,991
+  const bullTarget = Math.pow(10, 5.84 * Math.log10(d2029) + K_CEIL);  // ≈ $1,360,652
+
+  // Update price displays on cards
+  const el = id => document.getElementById(id);
+  if (el('bearTargetPrice')) el('bearTargetPrice').textContent = fmtK(bearTarget);
+  if (el('baseTargetPrice')) el('baseTargetPrice').textContent = fmtK(baseTarget);
+  if (el('bullTargetPrice')) el('bullTargetPrice').textContent = fmtK(bullTarget);
+
+  // Update × multiplier labels
+  const fmtX = n => n.toFixed(1) + '×';
+  const curK  = '$' + Math.round(cur/1000) + 'K';
+  if (el('bearXfrom')) el('bearXfrom').textContent = fmtX(bearTarget/cur) + ' from current ' + curK;
+  if (el('baseXfrom')) el('baseXfrom').textContent = fmtX(baseTarget/cur) + ' from current ' + curK;
+  if (el('bullXfrom')) el('bullXfrom').textContent = fmtX(bullTarget/cur) + ' from current ' + curK;
+
+  // ── Current price zone text ──
+  document.getElementById('plCurrentPrice').textContent = '$' + cur.toLocaleString();
+  let zoneText, zoneColor;
+  if (cur < floorP) {
+    zoneText = 'Below Power Law floor — EXTREME BUY (historical anomaly)'; zoneColor = '#22d47a';
+  } else if (cur < fairP) {
+    zoneText = `Below fair value — BUY ZONE · Floor today: ${fmtK(floorP)} · Fair: ${fmtK(fairP)}`; zoneColor = '#22d47a';
+  } else if (cur < ceilP) {
+    zoneText = `Between fair value and ceiling — HOLD · Fair: ${fmtK(fairP)} · Ceiling: ${fmtK(ceilP)}`; zoneColor = 'var(--yellow)';
+  } else {
+    zoneText = 'Above Power Law ceiling — consider taking profit'; zoneColor = 'var(--red)';
+  }
+  el('plCurrentZone').textContent  = zoneText;
+  el('plCurrentZone').style.color  = zoneColor;
+
+  // ── Update live chart ──
+  if (charts.powerLaw) {
+    const now   = new Date();
+    const curYr = now.getFullYear() + now.getMonth()/12 + now.getDate()/365;
+    const hist  = charts.powerLaw.data.datasets[3].data;
+    const last  = hist[hist.length - 1];
+    if (last && last.isCurrent) { last.x = parseFloat(curYr.toFixed(2)); last.y = cur; }
+    // Sync 2029 triangle targets
+    const tgts = charts.powerLaw.data.datasets[4].data;
+    if (tgts.length >= 3) { tgts[0].y = bearTarget; tgts[1].y = baseTarget; tgts[2].y = bullTarget; }
+    charts.powerLaw.update('none');
+  }
+}
+
+// ══════════════════════════════════════════════
 // INIT
 // ══════════════════════════════════════════════
 async function init() {
   buildCharts();
   updateAllocUI();
   updatePortfolio();
+  initCycleBar();
 
   // Initial fetch — BTC + JPY in parallel
   const [btc] = await Promise.all([fetchBtc(), fetchJpyUsd()]);
@@ -1497,6 +2019,8 @@ async function init() {
   updateEntryPills();
   checkNeedManual();
   updatePortfolio();
+  buildPowerLawChart();
+  updatePLLabels();
 
   // Auto-refresh every 60s
   setInterval(async () => {
@@ -1506,7 +2030,7 @@ async function init() {
     if (mp) { liveMstrPrice = mp; document.getElementById('mstrPriceSub').textContent = 'via Finnhub · live'; }
     if (ap) { liveAsstPrice = ap; document.getElementById('asstPriceSub').textContent = 'via Finnhub · live'; }
     await fetchMetaplanet();
-    updateStats(); updateChartLines(); updatePortfolio();
+    updateStats(); updateChartLines(); updatePortfolio(); updatePLLabels();
   }, 60000);
 }
 
