@@ -23,8 +23,12 @@
     --btc-glow: rgba(247,147,26,0.35);
     --green: #22d47a;
     --green-dim: rgba(34,212,122,0.12);
+    --cyan: #00d4ff;
+    --cyan-dim: rgba(0,212,255,0.12);
     --yellow: #f5c542;
     --yellow-dim: rgba(245,197,66,0.12);
+    --orange: #ff8c00;
+    --orange-dim: rgba(255,140,0,0.12);
     --red: #ff4d6d;
     --red-dim: rgba(255,77,109,0.12);
     --text: #e8e8f0;
@@ -42,7 +46,6 @@
     overflow-x: hidden;
   }
 
-  /* Dot grid background */
   body::before {
     content: '';
     position: fixed;
@@ -53,7 +56,6 @@
     z-index: 0;
   }
 
-  /* Ambient glow */
   body::after {
     content: '';
     position: fixed;
@@ -70,7 +72,7 @@
   .page-wrap {
     position: relative;
     z-index: 1;
-    max-width: 1200px;
+    max-width: 1280px;
     margin: 0 auto;
     padding: 24px 20px 60px;
   }
@@ -165,7 +167,7 @@
   /* ── STATS ROW ── */
   .stats-row {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 12px;
     margin-bottom: 20px;
   }
@@ -204,8 +206,6 @@
     pointer-events: none;
   }
 
-  .stat-card.mstr-card { border-color: rgba(255,255,255,0.1); }
-
   .stat-label {
     font-family: var(--mono);
     font-size: 10px;
@@ -217,7 +217,7 @@
 
   .stat-value {
     font-family: var(--mono);
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 600;
     letter-spacing: -0.5px;
     line-height: 1;
@@ -233,24 +233,24 @@
     margin-top: 6px;
   }
 
-  .btc-color { color: var(--btc); }
+  .btc-color   { color: var(--btc); }
   .green-color { color: var(--green); }
-  .yellow-color { color: var(--yellow); }
-  .red-color { color: var(--red); }
+  .cyan-color  { color: var(--cyan); }
+  .yellow-color{ color: var(--yellow); }
+  .orange-color{ color: var(--orange); }
+  .red-color   { color: var(--red); }
   .white-color { color: var(--text); }
 
-  /* ── UNDERVALUED BADGE ── */
-  .stat-card.nav-diff { }
-  .nav-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 3px 8px;
-    border-radius: 20px;
+  /* scenario badge on stat card */
+  .scenario-tag {
+    display: inline-block;
     font-family: var(--mono);
-    font-size: 10px;
-    font-weight: 500;
-    margin-top: 8px;
+    font-size: 8px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-bottom: 6px;
   }
 
   /* ── ZONE GAUGE ── */
@@ -317,27 +317,37 @@
     align-items: center;
     justify-content: center;
     font-family: var(--mono);
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 500;
     letter-spacing: 0.5px;
     transition: opacity 0.3s;
   }
 
-  .zone-segment.accum {
+  .zone-segment.bear {
     background: linear-gradient(90deg, rgba(34,212,122,0.2), rgba(34,212,122,0.35));
     flex: 2;
     color: var(--green);
     border-right: 1px solid rgba(34,212,122,0.3);
   }
-
-  .zone-segment.hold {
+  .zone-segment.conservative {
+    background: linear-gradient(90deg, rgba(0,212,255,0.2), rgba(0,212,255,0.35));
+    flex: 2;
+    color: var(--cyan);
+    border-right: 1px solid rgba(0,212,255,0.3);
+  }
+  .zone-segment.base {
     background: linear-gradient(90deg, rgba(245,197,66,0.2), rgba(245,197,66,0.35));
-    flex: 1;
+    flex: 1.5;
     color: var(--yellow);
     border-right: 1px solid rgba(245,197,66,0.3);
   }
-
-  .zone-segment.sell {
+  .zone-segment.bull {
+    background: linear-gradient(90deg, rgba(255,140,0,0.2), rgba(255,140,0,0.35));
+    flex: 1.5;
+    color: var(--orange);
+    border-right: 1px solid rgba(255,140,0,0.3);
+  }
+  .zone-segment.ubull {
     background: linear-gradient(90deg, rgba(255,77,109,0.2), rgba(255,77,109,0.35));
     flex: 1;
     color: var(--red);
@@ -369,6 +379,8 @@
   .zone-labels {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px;
     margin-top: 4px;
   }
 
@@ -387,10 +399,11 @@
     height: 8px;
     border-radius: 2px;
   }
-
-  .zone-label-item.accum::before { background: var(--green-dim); border: 1px solid var(--green); }
-  .zone-label-item.hold::before { background: var(--yellow-dim); border: 1px solid var(--yellow); }
-  .zone-label-item.sell::before { background: var(--red-dim); border: 1px solid var(--red); }
+  .zone-label-item.bear::before       { background: var(--green-dim);  border: 1px solid var(--green); }
+  .zone-label-item.conservative::before { background: var(--cyan-dim); border: 1px solid var(--cyan);  }
+  .zone-label-item.base::before       { background: var(--yellow-dim); border: 1px solid var(--yellow);}
+  .zone-label-item.bull::before       { background: var(--orange-dim); border: 1px solid var(--orange);}
+  .zone-label-item.ubull::before      { background: var(--red-dim);    border: 1px solid var(--red);   }
 
   /* ── TWO COLUMN LAYOUT ── */
   .main-grid {
@@ -444,7 +457,7 @@
 
   .chart-legend {
     display: flex;
-    gap: 14px;
+    gap: 10px;
     flex-wrap: wrap;
     margin-bottom: 14px;
   }
@@ -452,21 +465,21 @@
   .legend-item {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
     font-family: var(--mono);
-    font-size: 10px;
+    font-size: 9px;
     color: var(--text-dim);
   }
 
   .legend-dot {
-    width: 24px;
+    width: 20px;
     height: 2px;
     border-radius: 2px;
   }
 
   .chart-container {
     position: relative;
-    height: 280px;
+    height: 300px;
   }
 
   /* ── PROJECTION PANEL ── */
@@ -500,7 +513,7 @@
 
   .slider-btc-price {
     font-family: var(--mono);
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 600;
     color: var(--btc);
     letter-spacing: -1px;
@@ -533,9 +546,7 @@
     transition: transform 0.1s;
   }
 
-  input[type=range]::-webkit-slider-thumb:hover {
-    transform: scale(1.2);
-  }
+  input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
 
   input[type=range]::-moz-range-thumb {
     width: 18px;
@@ -562,13 +573,13 @@
   .proj-results {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin-top: 20px;
+    gap: 8px;
+    margin-top: 16px;
   }
 
   .proj-row {
     border-radius: 10px;
-    padding: 14px 16px;
+    padding: 10px 14px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -578,41 +589,31 @@
     overflow: hidden;
   }
 
-  .proj-row.x1 {
-    background: rgba(34,212,122,0.08);
-    border-color: rgba(34,212,122,0.2);
-  }
-
-  .proj-row.x2 {
-    background: rgba(245,197,66,0.08);
-    border-color: rgba(245,197,66,0.2);
-  }
-
-  .proj-row.x3 {
-    background: rgba(255,77,109,0.08);
-    border-color: rgba(255,77,109,0.2);
-  }
-
-  .proj-row-left { }
+  .proj-row.s1 { background: rgba(34,212,122,0.08);  border-color: rgba(34,212,122,0.2);  }
+  .proj-row.s2 { background: rgba(0,212,255,0.08);   border-color: rgba(0,212,255,0.2);   }
+  .proj-row.s3 { background: rgba(245,197,66,0.08);  border-color: rgba(245,197,66,0.2);  }
+  .proj-row.s4 { background: rgba(255,140,0,0.08);   border-color: rgba(255,140,0,0.2);   }
+  .proj-row.s5 { background: rgba(255,77,109,0.08);  border-color: rgba(255,77,109,0.2);  }
 
   .proj-mnav {
     font-family: var(--mono);
     font-size: 11px;
     font-weight: 500;
     letter-spacing: 0.5px;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
   }
 
   .proj-zone {
     font-family: var(--mono);
-    font-size: 9px;
+    font-size: 8px;
     color: var(--text-muted);
     letter-spacing: 0.5px;
+    text-transform: uppercase;
   }
 
   .proj-price {
     font-family: var(--mono);
-    font-size: 20px;
+    font-size: 17px;
     font-weight: 600;
     letter-spacing: -0.5px;
     text-align: right;
@@ -620,28 +621,28 @@
 
   .proj-updown {
     font-family: var(--mono);
-    font-size: 10px;
+    font-size: 9px;
     text-align: right;
     color: var(--text-muted);
     margin-top: 2px;
   }
 
-  /* ── SATS PER SHARE ── */
-  .sats-card {
+  /* ── KEY METRICS CARD ── */
+  .metrics-card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 14px;
     padding: 20px 22px;
     margin-bottom: 20px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0;
     align-items: center;
     position: relative;
     overflow: hidden;
   }
 
-  .sats-card::before {
+  .metrics-card::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
@@ -649,26 +650,43 @@
     background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
   }
 
-  .sats-metric {
+  .metric-item {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    padding: 12px 20px;
+    border-right: 1px solid var(--border);
   }
 
-  .sats-metric .stat-label { margin-bottom: 4px; }
-  .sats-metric .stat-value { font-size: 26px; }
+  .metric-item:last-child { border-right: none; }
 
-  .sats-divider {
-    width: 1px;
-    height: 50px;
-    background: var(--border);
-    align-self: center;
+  @media (max-width: 700px) {
+    .metric-item { border-right: none; border-bottom: 1px solid var(--border); }
+    .metric-item:last-child { border-bottom: none; }
   }
 
-  @media (max-width: 600px) {
-    .sats-divider { display: none; }
-    .stats-row { grid-template-columns: repeat(2, 1fr); }
-    .stat-value { font-size: 18px; }
+  .metric-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  .metric-value {
+    font-family: var(--mono);
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    line-height: 1;
+  }
+
+  .metric-sub {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 4px;
   }
 
   /* ── DISCLAIMER ── */
@@ -730,12 +748,10 @@
     margin-top: 4px;
   }
 
-  /* ── GLOW ANIMATION ON UPDATE ── */
   @keyframes flash-update {
     0% { opacity: 0.4; }
     100% { opacity: 1; }
   }
-
   .updated { animation: flash-update 0.4s ease-out; }
 
   /* ── DATA SOURCES ── */
@@ -766,6 +782,12 @@
     border-radius: 50%;
     background: var(--green);
   }
+
+  @media (max-width: 600px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .stat-value { font-size: 16px; }
+    .metric-value { font-size: 20px; }
+  }
 </style>
 </head>
 <body>
@@ -789,8 +811,9 @@
   <!-- DATA SOURCES -->
   <div class="data-row">
     <div class="data-source-tag"><span class="dot"></span> BTC: CoinGecko API</div>
-    <div class="data-source-tag"><span class="dot"></span> Holdings: 818,334 BTC (Mar 22, 2026)</div>
-    <div class="data-source-tag"><span class="dot"></span> Shares: 383.5M (MAR 06, 2026)</div>
+    <div class="data-source-tag"><span class="dot"></span> Holdings: 818,334 BTC (Apr 26, 2026)</div>
+    <div class="data-source-tag"><span class="dot"></span> Basic Shares: 350.9M (Apr 26, 2026)</div>
+    <div class="data-source-tag"><span class="dot"></span> Diluted Shares: 383.5M</div>
   </div>
 
   <!-- MAIN STATS ROW -->
@@ -801,7 +824,7 @@
       <div class="stat-sub" id="btcChange">Loading…</div>
     </div>
 
-    <div class="stat-card mstr-card">
+    <div class="stat-card">
       <div class="stat-label">MSTR Price</div>
       <div class="stat-value white-color" id="mstrPrice">—</div>
       <div class="stat-sub" id="mstrPriceNote">Enter below if auto-fetch fails</div>
@@ -810,39 +833,52 @@
     <div class="stat-card">
       <div class="stat-label">Current mNAV</div>
       <div class="stat-value" id="mnavValue" style="color:var(--yellow)">—</div>
-      <div class="stat-sub">Market Cap / BTC NAV</div>
+      <div class="stat-sub">Mkt Cap ÷ BTC NAV</div>
     </div>
 
-    <div class="stat-card">
-      <div class="stat-label">Fair Value (1× mNAV)</div>
+    <!-- 5 scenario fair values -->
+    <div class="stat-card" style="border-color:rgba(34,212,122,0.2)">
+      <div class="scenario-tag" style="background:rgba(34,212,122,0.12);color:var(--green)">1× BEAR</div>
       <div class="stat-value green-color" id="fv1x">—</div>
-      <div class="stat-sub">BTC NAV / Shares Out.</div>
+      <div class="stat-sub">Fair value floor</div>
+    </div>
+
+    <div class="stat-card" style="border-color:rgba(0,212,255,0.2)">
+      <div class="scenario-tag" style="background:rgba(0,212,255,0.12);color:var(--cyan)">2× CONSERVATIVE</div>
+      <div class="stat-value cyan-color" id="fv2x">—</div>
+      <div class="stat-sub">Modest premium</div>
+    </div>
+
+    <div class="stat-card" style="border-color:rgba(245,197,66,0.2)">
+      <div class="scenario-tag" style="background:rgba(245,197,66,0.12);color:var(--yellow)">3× BASE</div>
+      <div class="stat-value yellow-color" id="fv3x">—</div>
+      <div class="stat-sub">Historical norm</div>
+    </div>
+
+    <div class="stat-card" style="border-color:rgba(255,140,0,0.2)">
+      <div class="scenario-tag" style="background:rgba(255,140,0,0.12);color:var(--orange)">4× BULL</div>
+      <div class="stat-value orange-color" id="fv4x">—</div>
+      <div class="stat-sub">Cycle top range</div>
+    </div>
+
+    <div class="stat-card" style="border-color:rgba(255,77,109,0.2)">
+      <div class="scenario-tag" style="background:rgba(255,77,109,0.12);color:var(--red)">5× ULTRA BULL</div>
+      <div class="stat-value red-color" id="fv5x">—</div>
+      <div class="stat-sub">Euphoria peak</div>
     </div>
 
     <div class="stat-card">
-      <div class="stat-label">Fair Value (2× mNAV)</div>
-      <div class="stat-value yellow-color" id="fv2x">—</div>
-      <div class="stat-sub">Historical premium</div>
-    </div>
-
-    <div class="stat-card">
-      <div class="stat-label">Fair Value (3× mNAV)</div>
-      <div class="stat-value red-color" id="fv3x">—</div>
-      <div class="stat-sub">Bull cycle peak range</div>
-    </div>
-
-    <div class="stat-card nav-diff">
       <div class="stat-label">vs BTC NAV</div>
       <div class="stat-value" id="undervalued">—</div>
       <div class="stat-sub" id="undervaluedLabel">Mkt Cap vs BTC NAV</div>
     </div>
   </div>
 
-  <!-- MSTR MANUAL INPUT (shown if auto-fetch fails) -->
+  <!-- MSTR MANUAL INPUT -->
   <div class="manual-input-wrap" id="manualInputWrap" style="display:none">
     <label>⚠ MSTR price (manual):</label>
     <span style="font-family:var(--mono);font-size:14px;color:var(--text-muted)">$</span>
-    <input type="number" id="mstrManual" placeholder="e.g. 285" min="1" max="9999" step="0.01">
+    <input type="number" id="mstrManual" placeholder="e.g. 185" min="1" max="9999" step="0.01">
     <button onclick="applyManualMSTR()" style="background:var(--btc);color:#000;border:none;padding:4px 10px;border-radius:6px;font-family:var(--mono);font-size:11px;cursor:pointer;font-weight:600;">Apply</button>
   </div>
   <div class="mstr-source-note" id="mstrSourceNote" style="margin-bottom:16px;"></div>
@@ -850,7 +886,7 @@
   <!-- ZONE GAUGE -->
   <div class="zone-section">
     <div class="zone-header">
-      <div class="zone-title">mNAV Zone Indicator</div>
+      <div class="zone-title">mNAV Scenario Gauge</div>
       <div style="display:flex;align-items:baseline;gap:6px">
         <div class="mnav-display" id="zonesMnav">—</div>
         <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted)" id="zonesLabel">calculating…</div>
@@ -858,16 +894,20 @@
     </div>
     <div class="zone-bar-wrap">
       <div class="zone-bar">
-        <div class="zone-segment accum">ACCUMULATE · 1×–2×</div>
-        <div class="zone-segment hold">HOLD · 2×–2.5×</div>
-        <div class="zone-segment sell">SELL · 2.5×+</div>
+        <div class="zone-segment bear">BEAR · 1×</div>
+        <div class="zone-segment conservative">CONSERVATIVE · 2×</div>
+        <div class="zone-segment base">BASE · 3×</div>
+        <div class="zone-segment bull">BULL · 4×</div>
+        <div class="zone-segment ubull">ULTRA · 5×</div>
       </div>
       <div class="zone-marker" id="zoneMarker" style="left:0%" data-label=""></div>
     </div>
     <div class="zone-labels">
-      <div class="zone-label-item accum">Accumulate (1× – 2×mNAV)</div>
-      <div class="zone-label-item hold">Hold (2× – 2.5×mNAV)</div>
-      <div class="zone-label-item sell">Sell Zone (2.5×+ mNAV)</div>
+      <div class="zone-label-item bear">Bear (1× mNAV)</div>
+      <div class="zone-label-item conservative">Conservative (2×)</div>
+      <div class="zone-label-item base">Base (3×)</div>
+      <div class="zone-label-item bull">Bull (4×)</div>
+      <div class="zone-label-item ubull">Ultra Bull (5×)</div>
     </div>
   </div>
 
@@ -878,9 +918,11 @@
     <div class="chart-card">
       <div class="card-title"><span class="card-title-dot"></span> MSTR Fair Value vs BTC Price</div>
       <div class="chart-legend">
-        <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div> 1× mNAV (fair value)</div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--yellow)"></div> 2× mNAV (premium)</div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div> 3× mNAV (cycle top)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#22d47a"></div> 1× Bear</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#00d4ff"></div> 2× Conservative</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#f5c542"></div> 3× Base</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#ff8c00"></div> 4× Bull</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#ff4d6d"></div> 5× Ultra Bull</div>
         <div class="legend-item"><div class="legend-dot" style="background:rgba(255,255,255,0.5);border-top:1px dashed rgba(255,255,255,0.4)"></div> MSTR price</div>
       </div>
       <div class="chart-container">
@@ -911,42 +953,62 @@
       </div>
 
       <div class="proj-results">
-        <div class="proj-row x1">
-          <div class="proj-row-left">
-            <div class="proj-mnav" style="color:var(--green)">1× mNAV</div>
-            <div class="proj-zone">ACCUMULATE · Fair Value</div>
+        <div class="proj-row s1">
+          <div>
+            <div class="proj-mnav" style="color:var(--green)">1× mNAV · Bear</div>
+            <div class="proj-zone">Fair Value Floor</div>
           </div>
           <div>
             <div class="proj-price green-color" id="proj1x">—</div>
             <div class="proj-updown" id="proj1xUpdown">—</div>
           </div>
         </div>
-        <div class="proj-row x2">
-          <div class="proj-row-left">
-            <div class="proj-mnav" style="color:var(--yellow)">2× mNAV</div>
-            <div class="proj-zone">HOLD · Healthy Premium</div>
+        <div class="proj-row s2">
+          <div>
+            <div class="proj-mnav" style="color:var(--cyan)">2× mNAV · Conservative</div>
+            <div class="proj-zone">Modest Premium</div>
           </div>
           <div>
-            <div class="proj-price yellow-color" id="proj2x">—</div>
+            <div class="proj-price cyan-color" id="proj2x">—</div>
             <div class="proj-updown" id="proj2xUpdown">—</div>
           </div>
         </div>
-        <div class="proj-row x3">
-          <div class="proj-row-left">
-            <div class="proj-mnav" style="color:var(--red)">3× mNAV</div>
-            <div class="proj-zone">SELL · Cycle Top Range</div>
+        <div class="proj-row s3">
+          <div>
+            <div class="proj-mnav" style="color:var(--yellow)">3× mNAV · Base</div>
+            <div class="proj-zone">Historical Norm</div>
           </div>
           <div>
-            <div class="proj-price red-color" id="proj3x">—</div>
+            <div class="proj-price yellow-color" id="proj3x">—</div>
             <div class="proj-updown" id="proj3xUpdown">—</div>
+          </div>
+        </div>
+        <div class="proj-row s4">
+          <div>
+            <div class="proj-mnav" style="color:var(--orange)">4× mNAV · Bull</div>
+            <div class="proj-zone">Cycle Top Range</div>
+          </div>
+          <div>
+            <div class="proj-price orange-color" id="proj4x">—</div>
+            <div class="proj-updown" id="proj4xUpdown">—</div>
+          </div>
+        </div>
+        <div class="proj-row s5">
+          <div>
+            <div class="proj-mnav" style="color:var(--red)">5× mNAV · Ultra Bull</div>
+            <div class="proj-zone">Euphoria / Cycle Peak</div>
+          </div>
+          <div>
+            <div class="proj-price red-color" id="proj5x">—</div>
+            <div class="proj-updown" id="proj5xUpdown">—</div>
           </div>
         </div>
       </div>
 
-      <div style="margin-top:14px;padding:10px 12px;background:var(--surface);border-radius:8px;border:1px solid var(--border)">
-        <div style="font-family:var(--mono);font-size:9px;color:var(--text-muted);line-height:1.6">
+      <div style="margin-top:12px;padding:10px 12px;background:var(--surface);border-radius:8px;border:1px solid var(--border)">
+        <div style="font-family:var(--mono);font-size:9px;color:var(--text-muted);line-height:1.7">
           <div>₿ Holdings: <span style="color:var(--text)">818,334 BTC</span></div>
-          <div>Shares Out: <span style="color:var(--text)">383.5M</span></div>
+          <div>Basic Shares: <span style="color:var(--text)">350.9M</span></div>
           <div>BTC/Share: <span style="color:var(--btc)" id="sidebarBtcPerShare">—</span></div>
         </div>
       </div>
@@ -954,49 +1016,50 @@
 
   </div><!-- end main-grid -->
 
-  <!-- SATS PER SHARE CARD -->
-  <div class="sats-card">
-    <div class="sats-metric">
-      <div class="stat-label">Sats per MSTR Share</div>
-      <div class="stat-value btc-color" id="satsPerShare">—</div>
-      <div class="stat-sub">1 MSTR ≈ X sats of BTC exposure</div>
+  <!-- KEY METRICS CARD -->
+  <div class="metrics-card">
+    <div class="metric-item">
+      <div class="metric-label">BTC NAV</div>
+      <div class="metric-value btc-color" id="metricBtcNav">—</div>
+      <div class="metric-sub">BTC Price × 818,334 holdings</div>
     </div>
-    <div class="sats-divider"></div>
-    <div class="sats-metric">
-      <div class="stat-label">BTC per Share</div>
-      <div class="stat-value white-color" id="btcPerShare">—</div>
-      <div class="stat-sub">818,334 BTC ÷ 383.5M shares</div>
+    <div class="metric-item">
+      <div class="metric-label">Market Cap</div>
+      <div class="metric-value white-color" id="metricMarketCap">—</div>
+      <div class="metric-sub">MSTR Price × 350.9M shares</div>
     </div>
-    <div class="sats-divider"></div>
-    <div class="sats-metric">
-      <div class="stat-label">BTC NAV (Total)</div>
-      <div class="stat-value" id="btcNav" style="color:var(--btc)">—</div>
-      <div class="stat-sub">Holdings × BTC price</div>
-    </div>
-    <div class="sats-divider"></div>
-    <div class="sats-metric">
-      <div class="stat-label">Avg Cost Basis</div>
-      <div class="stat-value white-color">$75,694</div>
-      <div class="stat-sub">per BTC acquired</div>
+    <div class="metric-item">
+      <div class="metric-label">mNAV (Mkt Cap / BTC NAV)</div>
+      <div class="metric-value" id="metricMnav" style="color:var(--yellow)">—</div>
+      <div class="metric-sub" id="metricMnavNote">Market Cap basis · excludes debt</div>
     </div>
   </div>
 
   <!-- DISCLAIMER -->
   <div class="disclaimer">
     <span class="disclaimer-icon">⚠</span>
-    <span>Not financial advice. mNAV zones are indicative thresholds based on historical MSTR trading behavior. MSTR frequently trades at a premium to BTC NAV due to leverage, optionality, and institutional access. Data is updated in real-time from public APIs. BTC holdings and share count are sourced from Strategy Inc SEC filings and may lag by days. Always verify at strategy.com.</span>
+    <span>Not financial advice. mNAV here = Market Cap ÷ BTC NAV (excludes debt & preferred). Strategy.com shows mNAV using Enterprise Value (EV = Mkt Cap + Debt $8.3B + Preferred $13.5B − Cash $2.3B), which gives a higher reading (~1.28× at current prices). Scenarios: Bear 1×, Conservative 2×, Base 3×, Bull 4×, Ultra Bull 5×. BTC holdings and share count from Strategy Inc SEC filings (Apr 26, 2026). Always verify at strategy.com.</span>
   </div>
 
 </div><!-- end page-wrap -->
 
 <script>
 // ── CONSTANTS ──
-const BTC_HOLDINGS = 766970;
-const SHARES_OUT = 346819000;
+const BTC_HOLDINGS = 818334;          // Apr 26, 2026 — Strategy Inc
+const SHARES_OUT   = 350945000;       // Basic shares outstanding, Apr 26, 2026
 const BTC_PER_SHARE = BTC_HOLDINGS / SHARES_OUT;
-const SATS_PER_BTC = 100000000;
+const SATS_PER_BTC  = 100000000;
 
-let liveBtcPrice = 82000;   // fallback
+// 5 mNAV scenarios
+const SCENARIOS = [
+  { id: 1, label: 'Bear',        mnav: 1, color: '#22d47a', cssVar: 'var(--green)'  },
+  { id: 2, label: 'Conservative',mnav: 2, color: '#00d4ff', cssVar: 'var(--cyan)'   },
+  { id: 3, label: 'Base',        mnav: 3, color: '#f5c542', cssVar: 'var(--yellow)' },
+  { id: 4, label: 'Bull',        mnav: 4, color: '#ff8c00', cssVar: 'var(--orange)' },
+  { id: 5, label: 'Ultra Bull',  mnav: 5, color: '#ff4d6d', cssVar: 'var(--red)'    },
+];
+
+let liveBtcPrice  = 82000;
 let liveMstrPrice = null;
 let chartInstance = null;
 let sliderBtcPrice = 80000;
@@ -1009,16 +1072,9 @@ function fmt$(n, decimals=0) {
   return '$' + n.toLocaleString('en-US', {minimumFractionDigits:decimals, maximumFractionDigits:decimals});
 }
 
-function fmtSats(n) {
-  if (!n) return '—';
-  const s = Math.round(n * SATS_PER_BTC);
-  return s.toLocaleString('en-US') + ' sats';
-}
-
 function fmtPct(n, plus=true) {
   if (n === null || isNaN(n)) return '—';
-  const s = (plus && n > 0 ? '+' : '') + n.toFixed(1) + '%';
-  return s;
+  return (plus && n > 0 ? '+' : '') + n.toFixed(1) + '%';
 }
 
 // ── FETCH BTC PRICE ──
@@ -1028,8 +1084,9 @@ async function fetchBtcPrice() {
     const d = await r.json();
     liveBtcPrice = d.bitcoin.usd;
     const change = d.bitcoin.usd_24h_change;
-    document.getElementById('btcChange').textContent = `24h: ${fmtPct(change)}`;
-    document.getElementById('btcChange').style.color = change >= 0 ? 'var(--green)' : 'var(--red)';
+    const el = document.getElementById('btcChange');
+    el.textContent = `24h: ${fmtPct(change)}`;
+    el.style.color = change >= 0 ? 'var(--green)' : 'var(--red)';
     return liveBtcPrice;
   } catch(e) {
     console.warn('BTC fetch error:', e);
@@ -1047,7 +1104,7 @@ async function fetchMstrPrice() {
       { signal: AbortSignal.timeout(8000) }
     );
     const d = await r.json();
-    const price = d?.c; // current price
+    const price = d?.c;
     if (price && price > 0) {
       liveMstrPrice = price;
       document.getElementById('mstrPriceNote').textContent = 'via Finnhub · live';
@@ -1056,14 +1113,13 @@ async function fetchMstrPrice() {
       return price;
     }
   } catch(e) { console.warn('Finnhub error:', e); }
-  // Fallback: show manual input
   showManualInput();
   return null;
 }
 
 function showManualInput() {
   document.getElementById('manualInputWrap').style.display = 'flex';
-  document.getElementById('mstrSourceNote').textContent = '⚠ Auto-fetch unavailable in this environment. Enter MSTR price manually.';
+  document.getElementById('mstrSourceNote').textContent = '⚠ Auto-fetch unavailable. Enter MSTR price manually.';
   document.getElementById('mstrPriceNote').textContent = 'Manual input required';
 }
 
@@ -1077,58 +1133,42 @@ function applyManualMSTR() {
   }
 }
 
-// ── CALCULATE mNAV ──
-function calcMnav(mstrPrice, btcPrice) {
-  const btcNav = BTC_HOLDINGS * btcPrice;
-  const marketCap = SHARES_OUT * mstrPrice;
-  return marketCap / btcNav;
-}
+// ── CORE CALCULATIONS ──
+function calcBtcNav(btcPrice)          { return BTC_HOLDINGS * btcPrice; }
+function calcMarketCap(mstrPrice)      { return SHARES_OUT * mstrPrice; }
+function calcMnav(mstrPrice, btcPrice) { return calcMarketCap(mstrPrice) / calcBtcNav(btcPrice); }
+function calcFairValue(mnav, btcPrice) { return (mnav * calcBtcNav(btcPrice)) / SHARES_OUT; }
 
-function calcFairValue(mnav, btcPrice) {
-  const btcNav = BTC_HOLDINGS * btcPrice;
-  return (mnav * btcNav) / SHARES_OUT;
-}
-
-// ── UPDATE ZONE MARKER ──
+// ── ZONE MARKER ──
+// Bar layout: 5 segments with flex 2, 2, 1.5, 1.5, 1 = 8 total
+// mNAV 1→2 = 0–25%, 2→3 = 25–50%, 3→4 = 50–68.75%, 4→5 = 68.75–87.5%, 5+ = 87.5–100%
 function updateZoneMarker(mnav) {
   const el = document.getElementById('zoneMarker');
-  // Zone: 1x to 3.5x (beyond is capped)
-  // Bar spans 1x to 3.5x
-  const minMnav = 1.0;
-  const maxMnav = 3.5;
-  let pct = ((mnav - minMnav) / (maxMnav - minMnav)) * 100;
-  pct = Math.max(2, Math.min(98, pct));
+  const breaks = [
+    { from:0,  to:1,  pctFrom:0,      pctTo:0      },
+    { from:1,  to:2,  pctFrom:0,      pctTo:25     },
+    { from:2,  to:3,  pctFrom:25,     pctTo:50     },
+    { from:3,  to:4,  pctFrom:50,     pctTo:68.75  },
+    { from:4,  to:5,  pctFrom:68.75,  pctTo:87.5   },
+    { from:5,  to:7,  pctFrom:87.5,   pctTo:100    },
+  ];
+  let pct = 0;
+  for (const seg of breaks) {
+    if (mnav >= seg.from && mnav <= seg.to) {
+      pct = seg.pctFrom + ((mnav - seg.from) / (seg.to - seg.from)) * (seg.pctTo - seg.pctFrom);
+      break;
+    } else if (mnav > seg.to) {
+      pct = seg.pctTo;
+    }
+  }
+  pct = Math.max(1, Math.min(99, pct));
   el.style.left = pct + '%';
   el.setAttribute('data-label', mnav.toFixed(2) + '×');
-
-  // Zones: accum = 1x-2x (57% of bar 0-57%), hold = 2x-2.5x (57-71%), sell = 2.5x+ (71-100%)
-  // Actually let's calculate based on 1 to 3.5 range:
-  // accum: 1.0 - 2.0 → 0 - 40%
-  // hold: 2.0 - 2.5 → 40 - 60%
-  // sell: 2.5 - 3.5 → 60 - 100%
-  // But we need the zone-bar flex ratios to match. 
-  // flex: 2 (accum), 1 (hold), 1 (sell) = 4 total
-  // accum = 50%, hold = 25%, sell = 25%
-  // 1x → 0%, 2x → 50%, 2.5x → 75%, 3.5x → ?
-  // Let me use a custom pct formula that matches the flex layout:
-  const accumEnd = 2.0;
-  const holdEnd = 2.5;
-  const sellEnd = 3.5;
-  let barPct;
-  if (mnav <= accumEnd) {
-    barPct = ((mnav - minMnav) / (accumEnd - minMnav)) * 50;
-  } else if (mnav <= holdEnd) {
-    barPct = 50 + ((mnav - accumEnd) / (holdEnd - accumEnd)) * 25;
-  } else {
-    barPct = 75 + ((mnav - holdEnd) / (sellEnd - holdEnd)) * 25;
-  }
-  barPct = Math.max(2, Math.min(98, barPct));
-  el.style.left = barPct + '%';
 }
 
-// ── UPDATE ALL DISPLAYS ──
+// ── UPDATE ALL ──
 function updateAll() {
-  const btcPrice = liveBtcPrice;
+  const btcPrice  = liveBtcPrice;
   const mstrPrice = liveMstrPrice;
 
   // BTC price
@@ -1145,44 +1185,65 @@ function updateAll() {
     document.getElementById('mstrPrice').textContent = '—';
   }
 
-  // BTC NAV
-  const btcNav = BTC_HOLDINGS * btcPrice;
-  document.getElementById('btcNav').textContent = fmt$(btcNav);
+  // BTC NAV & Market Cap
+  const btcNav = calcBtcNav(btcPrice);
+  const mktCap = mstrPrice !== null ? calcMarketCap(mstrPrice) : null;
 
-  // BTC/share & Sats/share
-  document.getElementById('btcPerShare').textContent = BTC_PER_SHARE.toFixed(6) + ' BTC';
-  document.getElementById('satsPerShare').textContent = fmtSats(BTC_PER_SHARE);
+  // Bottom metrics card
+  document.getElementById('metricBtcNav').textContent = fmt$(btcNav);
+
+  if (mktCap !== null) {
+    document.getElementById('metricMarketCap').textContent = fmt$(mktCap);
+    const mnav = mktCap / btcNav;
+    document.getElementById('metricMnav').textContent = mnav.toFixed(3) + '×';
+
+    let mnavColor = 'var(--green)';
+    if      (mnav >= 4.5) mnavColor = 'var(--red)';
+    else if (mnav >= 3.5) mnavColor = 'var(--orange)';
+    else if (mnav >= 2.5) mnavColor = 'var(--yellow)';
+    else if (mnav >= 1.5) mnavColor = 'var(--cyan)';
+    document.getElementById('metricMnav').style.color = mnavColor;
+  } else {
+    document.getElementById('metricMarketCap').textContent = '—';
+    document.getElementById('metricMnav').textContent = '—';
+  }
+
+  // Sidebar BTC/share
   document.getElementById('sidebarBtcPerShare').textContent = BTC_PER_SHARE.toFixed(6);
 
-  // Fair values
+  // Scenario fair values (stats row)
   document.getElementById('fv1x').textContent = fmt$(calcFairValue(1, btcPrice), 2);
   document.getElementById('fv2x').textContent = fmt$(calcFairValue(2, btcPrice), 2);
   document.getElementById('fv3x').textContent = fmt$(calcFairValue(3, btcPrice), 2);
+  document.getElementById('fv4x').textContent = fmt$(calcFairValue(4, btcPrice), 2);
+  document.getElementById('fv5x').textContent = fmt$(calcFairValue(5, btcPrice), 2);
 
-  // mNAV + zone
+  // mNAV + zone gauge
   if (mstrPrice !== null) {
     const mnav = calcMnav(mstrPrice, btcPrice);
     const mnavEl = document.getElementById('mnavValue');
-    mnavEl.textContent = mnav.toFixed(2) + '×';
+    mnavEl.textContent = mnav.toFixed(3) + '×';
 
     let mnavColor = 'var(--green)';
-    let zoneText = 'Accumulation Zone';
-    if (mnav > 2.5) { mnavColor = 'var(--red)'; zoneText = 'Sell Zone'; }
-    else if (mnav > 2.0) { mnavColor = 'var(--yellow)'; zoneText = 'Hold Zone'; }
+    let zoneText  = 'Bear Zone';
+    if      (mnav >= 4.5) { mnavColor = 'var(--red)';    zoneText = 'Ultra Bull Zone'; }
+    else if (mnav >= 3.5) { mnavColor = 'var(--orange)';  zoneText = 'Bull Zone'; }
+    else if (mnav >= 2.5) { mnavColor = 'var(--yellow)';  zoneText = 'Base Zone'; }
+    else if (mnav >= 1.5) { mnavColor = 'var(--cyan)';    zoneText = 'Conservative Zone'; }
     mnavEl.style.color = mnavColor;
 
-    document.getElementById('zonesMnav').textContent = mnav.toFixed(2) + '×';
+    document.getElementById('zonesMnav').textContent = mnav.toFixed(3) + '×';
     document.getElementById('zonesMnav').style.color = mnavColor;
     document.getElementById('zonesLabel').textContent = zoneText;
     updateZoneMarker(mnav);
 
-    // vs NAV
+    // vs NAV premium/discount
     const prem = (mnav - 1) * 100;
-    const underEl = document.getElementById('undervalued');
+    const underEl    = document.getElementById('undervalued');
     const underLabel = document.getElementById('undervaluedLabel');
     if (prem >= 0) {
       underEl.textContent = '+' + prem.toFixed(1) + '%';
-      underEl.style.color = prem > 100 ? 'var(--red)' : 'var(--yellow)';
+      underEl.style.color = prem > 150 ? 'var(--red)' : prem > 50 ? 'var(--yellow)' : 'var(--cyan)';
       underLabel.textContent = 'Premium to BTC NAV';
     } else {
       underEl.textContent = prem.toFixed(1) + '%';
@@ -1191,40 +1252,28 @@ function updateAll() {
     }
   }
 
-  // Update slider projections
   updateSlider();
   updateChart(btcPrice, mstrPrice);
-
-  // Timestamp
   document.getElementById('lastUpdated').textContent = 'Updated ' + new Date().toLocaleTimeString();
 }
 
 // ── SLIDER ──
 function updateSlider() {
-  const btcP = sliderBtcPrice;
+  const btcP  = sliderBtcPrice;
   const mstrP = liveMstrPrice;
 
   document.getElementById('sliderBtcDisplay').textContent = fmt$(btcP);
 
-  const p1 = calcFairValue(1, btcP);
-  const p2 = calcFairValue(2, btcP);
-  const p3 = calcFairValue(3, btcP);
+  const prices = SCENARIOS.map(s => calcFairValue(s.mnav, btcP));
 
-  document.getElementById('proj1x').textContent = fmt$(p1, 2);
-  document.getElementById('proj2x').textContent = fmt$(p2, 2);
-  document.getElementById('proj3x').textContent = fmt$(p3, 2);
-
-  if (mstrP) {
-    const up1 = ((p1 - mstrP) / mstrP) * 100;
-    const up2 = ((p2 - mstrP) / mstrP) * 100;
-    const up3 = ((p3 - mstrP) / mstrP) * 100;
-    const arrow = n => n > 0 ? '▲' : '▼';
-    const col = n => n > 0 ? 'var(--green)' : 'var(--red)';
-
-    for (const [id, up] of [['proj1xUpdown', up1], ['proj2xUpdown', up2], ['proj3xUpdown', up3]]) {
-      const el = document.getElementById(id);
-      el.textContent = arrow(up) + ' ' + Math.abs(up).toFixed(1) + '% from current';
-      el.style.color = col(up);
+  for (let i = 0; i < SCENARIOS.length; i++) {
+    const id = i + 1;
+    document.getElementById(`proj${id}x`).textContent = fmt$(prices[i], 2);
+    if (mstrP) {
+      const upPct = ((prices[i] - mstrP) / mstrP) * 100;
+      const el = document.getElementById(`proj${id}xUpdown`);
+      el.textContent = (upPct > 0 ? '▲ ' : '▼ ') + Math.abs(upPct).toFixed(1) + '% from current';
+      el.style.color = upPct > 0 ? 'var(--green)' : 'var(--red)';
     }
   }
 }
@@ -1237,57 +1286,32 @@ document.getElementById('btcSlider').addEventListener('input', e => {
 // ── CHART ──
 function buildChart(btcPrice, mstrPrice) {
   const ctx = document.getElementById('mstrChart').getContext('2d');
-
   const btcRange = [];
   for (let b = 40000; b <= 500000; b += 10000) btcRange.push(b);
 
-  const d1 = btcRange.map(b => calcFairValue(1, b));
-  const d2 = btcRange.map(b => calcFairValue(2, b));
-  const d3 = btcRange.map(b => calcFairValue(3, b));
-  const dMstr = mstrPrice ? btcRange.map(() => mstrPrice) : null;
+  const datasets = SCENARIOS.map(s => ({
+    label: `${s.mnav}× mNAV (${s.label})`,
+    data: btcRange.map(b => calcFairValue(s.mnav, b)),
+    borderColor: s.color,
+    backgroundColor: 'transparent',
+    borderWidth: s.mnav === 3 ? 2.5 : 1.8,
+    pointRadius: 0,
+    fill: false,
+    tension: 0.3,
+  }));
 
-  const gradGreen = ctx.createLinearGradient(0, 0, 0, 280);
-  gradGreen.addColorStop(0, 'rgba(34,212,122,0.08)');
-  gradGreen.addColorStop(1, 'transparent');
+  // Base scenario gets a subtle fill
+  const gradBase = ctx.createLinearGradient(0, 0, 0, 300);
+  gradBase.addColorStop(0, 'rgba(245,197,66,0.06)');
+  gradBase.addColorStop(1, 'transparent');
+  datasets[2].backgroundColor = gradBase;
+  datasets[2].fill = 'origin';
 
-  const datasets = [
-    {
-      label: '1× mNAV',
-      data: d1,
-      borderColor: 'rgba(34,212,122,0.9)',
-      backgroundColor: gradGreen,
-      borderWidth: 2,
-      pointRadius: 0,
-      fill: false,
-      tension: 0.3,
-    },
-    {
-      label: '2× mNAV',
-      data: d2,
-      borderColor: 'rgba(245,197,66,0.9)',
-      backgroundColor: 'transparent',
-      borderWidth: 2,
-      pointRadius: 0,
-      fill: false,
-      tension: 0.3,
-    },
-    {
-      label: '3× mNAV',
-      data: d3,
-      borderColor: 'rgba(255,77,109,0.9)',
-      backgroundColor: 'transparent',
-      borderWidth: 2,
-      pointRadius: 0,
-      fill: false,
-      tension: 0.3,
-    },
-  ];
-
-  if (dMstr) {
+  if (mstrPrice) {
     datasets.push({
       label: 'MSTR Price',
-      data: dMstr,
-      borderColor: 'rgba(255,255,255,0.45)',
+      data: btcRange.map(() => mstrPrice),
+      borderColor: 'rgba(255,255,255,0.5)',
       borderDash: [5, 4],
       backgroundColor: 'transparent',
       borderWidth: 1.5,
@@ -1298,10 +1322,7 @@ function buildChart(btcPrice, mstrPrice) {
 
   chartInstance = new Chart(ctx, {
     type: 'line',
-    data: {
-      labels: btcRange,
-      datasets,
-    },
+    data: { labels: btcRange, datasets },
     options: {
       responsive: true,
       maintainAspectRatio: false,
@@ -1314,15 +1335,14 @@ function buildChart(btcPrice, mstrPrice) {
           borderWidth: 1,
           titleColor: 'rgba(255,255,255,0.5)',
           bodyColor: '#e8e8f0',
-          titleFont: { family: "'IBM Plex Mono'" , size: 10 },
-          bodyFont: { family: "'IBM Plex Mono'", size: 11 },
+          titleFont: { family: "'IBM Plex Mono'", size: 10 },
+          bodyFont:  { family: "'IBM Plex Mono'", size: 11 },
           padding: 10,
           callbacks: {
             title: items => '$' + Number(items[0].label).toLocaleString() + ' BTC',
-            label: item => item.dataset.label + ': $' + item.raw.toLocaleString('en-US', {maximumFractionDigits:2}),
+            label: item  => item.dataset.label + ': $' + item.raw.toLocaleString('en-US', {maximumFractionDigits:2}),
           }
         },
-        annotation: undefined,
       },
       scales: {
         x: {
@@ -1331,7 +1351,7 @@ function buildChart(btcPrice, mstrPrice) {
             color: 'rgba(232,232,240,0.3)',
             font: { family: "'IBM Plex Mono'", size: 9 },
             maxTicksLimit: 8,
-            callback: v => '$' + (btcRange[v] >= 1000 ? (btcRange[v]/1000) + 'K' : btcRange[v]),
+            callback: (v, i) => '$' + (btcRange[i] >= 1000 ? (btcRange[i]/1000) + 'K' : btcRange[i]),
           },
           border: { color: 'transparent' },
         },
@@ -1351,53 +1371,51 @@ function buildChart(btcPrice, mstrPrice) {
 
 function updateChart(btcPrice, mstrPrice) {
   if (!chartInstance) { buildChart(btcPrice, mstrPrice); return; }
-
   const btcRange = chartInstance.data.labels;
-  chartInstance.data.datasets[0].data = btcRange.map(b => calcFairValue(1, b));
-  chartInstance.data.datasets[1].data = btcRange.map(b => calcFairValue(2, b));
-  chartInstance.data.datasets[2].data = btcRange.map(b => calcFairValue(3, b));
 
-  if (mstrPrice && chartInstance.data.datasets[3]) {
-    chartInstance.data.datasets[3].data = btcRange.map(() => mstrPrice);
-  } else if (mstrPrice) {
-    chartInstance.data.datasets.push({
-      label: 'MSTR Price',
-      data: btcRange.map(() => mstrPrice),
-      borderColor: 'rgba(255,255,255,0.45)',
-      borderDash: [5, 4],
-      backgroundColor: 'transparent',
-      borderWidth: 1.5,
-      pointRadius: 0,
-      fill: false,
-    });
+  SCENARIOS.forEach((s, i) => {
+    chartInstance.data.datasets[i].data = btcRange.map(b => calcFairValue(s.mnav, b));
+  });
+
+  const mstrDatasetIdx = SCENARIOS.length;
+  if (mstrPrice) {
+    if (chartInstance.data.datasets[mstrDatasetIdx]) {
+      chartInstance.data.datasets[mstrDatasetIdx].data = btcRange.map(() => mstrPrice);
+    } else {
+      chartInstance.data.datasets.push({
+        label: 'MSTR Price',
+        data: btcRange.map(() => mstrPrice),
+        borderColor: 'rgba(255,255,255,0.5)',
+        borderDash: [5, 4],
+        backgroundColor: 'transparent',
+        borderWidth: 1.5,
+        pointRadius: 0,
+        fill: false,
+      });
+    }
   }
-
   chartInstance.update('none');
 }
 
 // ── INIT ──
 async function init() {
-  // Build chart with defaults first
   buildChart(liveBtcPrice, null);
   updateSlider();
 
-  // Set slider default to approximate live BTC
   document.getElementById('btcSlider').value = 80000;
   sliderBtcPrice = 80000;
 
-  // Fetch live data
   const [btc, mstr] = await Promise.all([fetchBtcPrice(), fetchMstrPrice()]);
   liveBtcPrice = btc;
   if (mstr) liveMstrPrice = mstr;
 
-  // Sync slider to live price
   const sliderBTC = Math.min(500000, Math.max(40000, Math.round(liveBtcPrice / 5000) * 5000));
   document.getElementById('btcSlider').value = sliderBTC;
   sliderBtcPrice = sliderBTC;
 
   updateAll();
 
-  // Refresh every 60 seconds
+  // Refresh every 60s
   setInterval(async () => {
     const btc = await fetchBtcPrice();
     liveBtcPrice = btc;
