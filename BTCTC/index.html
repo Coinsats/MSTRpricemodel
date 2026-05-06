@@ -18,11 +18,15 @@
   --meta:#9B5DE5; --meta-dim:rgba(155,93,229,0.12); --meta-glow:rgba(155,93,229,0.35);
   --asst:#3B82F6; --asst-dim:rgba(59,130,246,0.12); --asst-glow:rgba(59,130,246,0.35);
   --green:#22d47a; --green-dim:rgba(34,212,122,0.12);
+  --cyan:#00d4ff;  --cyan-dim:rgba(0,212,255,0.12);
   --yellow:#f5c542; --yellow-dim:rgba(245,197,66,0.12);
+  --orange:#ff8c00; --orange-dim:rgba(255,140,0,0.12);
   --red:#ff4d6d; --red-dim:rgba(255,77,109,0.12);
   --text:#e8e8f0; --text-dim:rgba(232,232,240,0.5); --text-muted:rgba(232,232,240,0.3);
   --mono:'IBM Plex Mono',monospace; --sans:'Syne',sans-serif;
 }
+.cyan-color  { color:var(--cyan); }
+.orange-color{ color:var(--orange); }
 html,body { background:var(--bg); color:var(--text); font-family:var(--sans); min-height:100vh; overflow-x:hidden; }
 body::before { content:''; position:fixed; inset:0; background-image:radial-gradient(circle,rgba(255,255,255,0.04) 1px,transparent 1px); background-size:28px 28px; pointer-events:none; z-index:0; }
 body::after { content:''; position:fixed; top:-20%; left:50%; transform:translateX(-50%); width:70%; height:40%; background:radial-gradient(ellipse,rgba(247,147,26,0.06) 0%,transparent 70%); pointer-events:none; z-index:0; }
@@ -97,9 +101,16 @@ header { display:flex; align-items:center; justify-content:space-between; margin
 .zone-bar-wrap { position:relative; height:20px; border-radius:6px; overflow:visible; margin:4px 0 16px; }
 .zone-bar { display:flex; height:100%; border-radius:6px; overflow:hidden; }
 .zone-seg { display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:8px; font-weight:500; letter-spacing:0.5px; }
+/* 3-seg zones for META / ASST */
 .zone-seg.accum { background:linear-gradient(90deg,rgba(34,212,122,0.18),rgba(34,212,122,0.32)); flex:2; color:var(--green); border-right:1px solid rgba(34,212,122,0.3); }
-.zone-seg.hold { background:linear-gradient(90deg,rgba(245,197,66,0.18),rgba(245,197,66,0.32)); flex:1; color:var(--yellow); border-right:1px solid rgba(245,197,66,0.3); }
-.zone-seg.sell { background:linear-gradient(90deg,rgba(255,77,109,0.18),rgba(255,77,109,0.32)); flex:1; color:var(--red); }
+.zone-seg.hold  { background:linear-gradient(90deg,rgba(245,197,66,0.18),rgba(245,197,66,0.32)); flex:1; color:var(--yellow); border-right:1px solid rgba(245,197,66,0.3); }
+.zone-seg.sell  { background:linear-gradient(90deg,rgba(255,77,109,0.18),rgba(255,77,109,0.32)); flex:1; color:var(--red); }
+/* 5-seg zones for MSTR */
+.zone-seg.z-bear { background:linear-gradient(90deg,rgba(34,212,122,0.18),rgba(34,212,122,0.32)); flex:2; color:var(--green);  border-right:1px solid rgba(34,212,122,0.3); font-size:7px; }
+.zone-seg.z-cons { background:linear-gradient(90deg,rgba(0,212,255,0.15),rgba(0,212,255,0.28));   flex:2; color:var(--cyan);   border-right:1px solid rgba(0,212,255,0.3);   font-size:7px; }
+.zone-seg.z-base { background:linear-gradient(90deg,rgba(245,197,66,0.15),rgba(245,197,66,0.28)); flex:1.5; color:var(--yellow); border-right:1px solid rgba(245,197,66,0.3); font-size:7px; }
+.zone-seg.z-bull { background:linear-gradient(90deg,rgba(255,140,0,0.15),rgba(255,140,0,0.28));   flex:1.5; color:var(--orange); border-right:1px solid rgba(255,140,0,0.3);  font-size:7px; }
+.zone-seg.z-ubull{ background:linear-gradient(90deg,rgba(255,77,109,0.15),rgba(255,77,109,0.28)); flex:1;   color:var(--red);    font-size:7px; }
 .zone-marker { position:absolute; top:-4px; bottom:-4px; width:3px; background:white; border-radius:3px; box-shadow:0 0 8px rgba(255,255,255,0.9); transition:left 0.5s cubic-bezier(0.34,1.56,0.64,1); }
 .zone-marker::after { content:attr(data-label); position:absolute; bottom:-18px; left:50%; transform:translateX(-50%); font-family:var(--mono); font-size:8px; white-space:nowrap; color:var(--text); }
 .chart-legend-mini { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:8px; }
@@ -286,7 +297,7 @@ input:checked + .toggle-slider::before { transform:translateX(22px); }
 <!-- DATA SOURCES -->
 <div class="data-row">
   <div class="data-tag"><span class="dot"></span> BTC: CoinGecko + Binance</div>
-  <div class="data-tag"><span class="dot"></span> MSTR: Finnhub · 815,061 BTC · 348.9M shares</div>
+  <div class="data-tag"><span class="dot"></span> MSTR: Finnhub · 818,334 BTC · 350.9M basic shares (Apr 26, 2026)</div>
   <div class="data-tag"><span class="dot"></span> Metaplanet: Yahoo/Stooq/Finnhub · 40,177 BTC · 1.27B shares</div>
   <div class="data-tag"><span class="dot"></span> ASST: Finnhub · 13,741 BTC · 59.3M shares (Class A basic)</div>
 </div>
@@ -357,29 +368,34 @@ input:checked + .toggle-slider::before { transform:translateX(22px); }
   <!-- MSTR -->
   <div class="company-panel mstr-panel">
     <div class="company-name mstr-color">Strategy (MSTR)</div>
-    <div class="company-meta">NASDAQ: MSTR · 815,061 BTC · 348.9M shares</div>
-    <div class="mini-stats">
-      <div class="mini-stat"><div class="label">1× mNAV</div><div class="val green-color" id="mstr1xLive">—</div></div>
-      <div class="mini-stat"><div class="label">2× mNAV</div><div class="val yellow-color" id="mstr2xLive">—</div></div>
+    <div class="company-meta">NASDAQ: MSTR · 818,334 BTC · 350.9M basic shares (Apr 26, 2026)</div>
+    <div class="mini-stats" style="grid-template-columns:1fr 1fr 1fr">
+      <div class="mini-stat"><div class="label" style="color:var(--green)">1× Bear</div><div class="val green-color" id="mstr1xLive">—</div></div>
+      <div class="mini-stat"><div class="label" style="color:var(--yellow)">3× Base</div><div class="val yellow-color" id="mstr3xLive">—</div></div>
+      <div class="mini-stat"><div class="label" style="color:var(--red)">5× Ultra</div><div class="val red-color" id="mstr5xLive">—</div></div>
     </div>
     <div class="zone-compact">
       <div class="zone-compact-header">
-        <span class="zone-compact-label">mNAV Zone</span>
+        <span class="zone-compact-label">mNAV Scenario</span>
         <span class="zone-compact-mnav" id="mstrZoneMnav">—</span>
       </div>
       <div class="zone-bar-wrap">
         <div class="zone-bar">
-          <div class="zone-seg accum">ACCUM 1×–2×</div>
-          <div class="zone-seg hold">HOLD 2–2.5×</div>
-          <div class="zone-seg sell">SELL 2.5×+</div>
+          <div class="zone-seg z-bear">BEAR 1×</div>
+          <div class="zone-seg z-cons">CONS 2×</div>
+          <div class="zone-seg z-base">BASE 3×</div>
+          <div class="zone-seg z-bull">BULL 4×</div>
+          <div class="zone-seg z-ubull">ULTRA 5×</div>
         </div>
         <div class="zone-marker" id="mstrZoneMarker" style="left:2%" data-label=""></div>
       </div>
     </div>
     <div class="chart-legend-mini">
-      <div class="legend-item-mini"><div class="legend-line" style="background:var(--green)"></div>1× mNAV</div>
-      <div class="legend-item-mini"><div class="legend-line" style="background:var(--yellow)"></div>2× mNAV</div>
-      <div class="legend-item-mini"><div class="legend-line" style="background:var(--red)"></div>3× mNAV</div>
+      <div class="legend-item-mini"><div class="legend-line" style="background:var(--green)"></div>1× Bear</div>
+      <div class="legend-item-mini"><div class="legend-line" style="background:var(--cyan)"></div>2× Cons</div>
+      <div class="legend-item-mini"><div class="legend-line" style="background:var(--yellow)"></div>3× Base</div>
+      <div class="legend-item-mini"><div class="legend-line" style="background:var(--orange)"></div>4× Bull</div>
+      <div class="legend-item-mini"><div class="legend-line" style="background:var(--red)"></div>5× Ultra</div>
       <div class="legend-item-mini"><div class="legend-line" style="background:rgba(255,255,255,0.4)"></div>Price</div>
     </div>
     <div class="chart-wrap"><canvas id="mstrChart"></canvas></div>
@@ -606,7 +622,7 @@ input:checked + .toggle-slider::before { transform:translateX(22px); }
   <div class="scenario-grid">
     <div class="scenario-card bear">
       <div class="scenario-top"><span class="scenario-badge">🐻</span>
-        <div><div class="scenario-name green-color">Bear Case</div><div class="scenario-sub">All stocks at 1× mNAV (fair value)</div></div>
+        <div><div class="scenario-name green-color">Bear Case</div><div class="scenario-sub">All stocks at 1× mNAV (fair value floor)</div></div>
       </div>
       <div class="scenario-total green-color" id="bearTotal">$—</div>
       <div class="scenario-gain" id="bearGain">—</div>
@@ -614,7 +630,7 @@ input:checked + .toggle-slider::before { transform:translateX(22px); }
     </div>
     <div class="scenario-card base">
       <div class="scenario-top"><span class="scenario-badge">⚖️</span>
-        <div><div class="scenario-name yellow-color">Base Case</div><div class="scenario-sub">MSTR 2× · META &amp; ASST 2.5×</div></div>
+        <div><div class="scenario-name yellow-color">Base Case</div><div class="scenario-sub">MSTR 3× · META &amp; ASST 2.5×</div></div>
       </div>
       <div class="scenario-total yellow-color" id="baseTotal">$—</div>
       <div class="scenario-gain" id="baseGain">—</div>
@@ -622,7 +638,7 @@ input:checked + .toggle-slider::before { transform:translateX(22px); }
     </div>
     <div class="scenario-card bull">
       <div class="scenario-top"><span class="scenario-badge">🚀</span>
-        <div><div class="scenario-name meta-color">Bull Case</div><div class="scenario-sub">MSTR 3× · META &amp; ASST 4×</div></div>
+        <div><div class="scenario-name meta-color">Bull Case</div><div class="scenario-sub">MSTR 5× · META &amp; ASST 4×</div></div>
       </div>
       <div class="scenario-total meta-color" id="bullTotal">$—</div>
       <div class="scenario-gain" id="bullGain">—</div>
@@ -651,9 +667,9 @@ input:checked + .toggle-slider::before { transform:translateX(22px); }
             <th>Units Owned</th>
             <th class="bear-h">Bear Price<br>1× mNAV</th>
             <th class="bear-h">Bear Value</th>
-            <th class="base-h">Base Price<br>MSTR 2× / 2.5×</th>
+            <th class="base-h">Base Price<br>MSTR 3× / META·ASST 2.5×</th>
             <th class="base-h">Base Value</th>
-            <th class="bull-h">Bull Price<br>MSTR 3× / 4×</th>
+            <th class="bull-h">Bull Price<br>MSTR 5× / META·ASST 4×</th>
             <th class="bull-h">Bull Value</th>
           </tr>
         </thead>
@@ -859,7 +875,7 @@ input:checked + .toggle-slider::before { transform:translateX(22px); }
 <!-- DISCLAIMER -->
 <div class="disclaimer">
   <span class="disc-icon">⚠</span>
-  <span>Not financial advice. mNAV thresholds are indicative based on historical treasury company trading behavior. Entry Price mode assumes stocks were at 1× mNAV at the entry BTC price — actual historical prices may differ. Metaplanet (3350.T) prices converted from JPY at live FX rates. BTC holdings from latest SEC filings. Always verify at strategy.com, metaplanet.jp, and strive.com.</span>
+  <span>Not financial advice. MSTR scenarios: Bear 1×, Conservative 2×, Base 3×, Bull 4×, Ultra Bull 5× mNAV. Portfolio simulator uses Bear 1× / Base 3× / Bull 5× for MSTR and Bear 1× / Base 2.5× / Bull 4× for META &amp; ASST. Entry Price mode assumes stocks were at live mNAV at the entry BTC price. Metaplanet (3350.T) converted from JPY at live FX. MSTR data: 818,334 BTC · 350.9M basic shares (Apr 26, 2026). Always verify at strategy.com, metaplanet.jp, strive.com.</span>
 </div>
 
 </div><!-- end page-wrap -->
@@ -868,7 +884,7 @@ input:checked + .toggle-slider::before { transform:translateX(22px); }
 // ══════════════════════════════════════════════
 // ASSET CONSTANTS
 // ══════════════════════════════════════════════
-const MSTR_DATA = { btc:780897,  shares:346819000 };
+const MSTR_DATA = { btc:818334,  shares:350945000 };  // Apr 26, 2026 — Strategy Inc
 const META_DATA = { btc:40177,   shares:1270000000 }; // Updated Apr 2026 (was 1.17B, now 1.27B after new share issuances)
 const ASST_DATA = { btc:13741,   shares:59312566 };   // Class A basic shares only (matches official mNAV calculation)
 
@@ -982,6 +998,28 @@ function zoneMarkerPct(mnav, accumEnd, holdEnd) {
   return Math.max(2, Math.min(97, pct));
 }
 
+// 5-scenario zone marker for MSTR (Bear 1×, Conservative 2×, Base 3×, Bull 4×, Ultra 5×)
+// Bar flex: 2, 2, 1.5, 1.5, 1 = 8 total
+// Segments: 0–25% | 25–50% | 50–68.75% | 68.75–87.5% | 87.5–100%
+function zoneMarkerPct5(mnav) {
+  const breaks = [
+    { from:0,  to:1,  p0:0,      p1:0      },
+    { from:1,  to:2,  p0:0,      p1:25     },
+    { from:2,  to:3,  p0:25,     p1:50     },
+    { from:3,  to:4,  p0:50,     p1:68.75  },
+    { from:4,  to:5,  p0:68.75,  p1:87.5   },
+    { from:5,  to:7,  p0:87.5,   p1:100    },
+  ];
+  let pct = 0;
+  for (const seg of breaks) {
+    if (mnav >= seg.from && mnav <= seg.to) {
+      pct = seg.p0 + ((mnav - seg.from) / (seg.to - seg.from)) * (seg.p1 - seg.p0);
+      break;
+    } else if (mnav > seg.to) { pct = seg.p1; }
+  }
+  return Math.max(1, Math.min(99, pct));
+}
+
 function updateZone(markerId, mnavId, mnav, accumEnd, holdEnd) {
   const marker = document.getElementById(markerId);
   const mnavEl = document.getElementById(mnavId);
@@ -989,6 +1027,21 @@ function updateZone(markerId, mnavId, mnav, accumEnd, holdEnd) {
   marker.style.left = zoneMarkerPct(mnav, accumEnd, holdEnd) + '%';
   marker.setAttribute('data-label', fmtMnav(mnav));
   const color = mnav <= accumEnd ? 'var(--green)' : mnav <= holdEnd ? 'var(--yellow)' : 'var(--red)';
+  mnavEl.textContent = fmtMnav(mnav);
+  mnavEl.style.color = color;
+}
+
+function updateZoneMstr(markerId, mnavId, mnav) {
+  const marker = document.getElementById(markerId);
+  const mnavEl = document.getElementById(mnavId);
+  if (!marker || !mnavEl || mnav === null || isNaN(mnav)) return;
+  marker.style.left = zoneMarkerPct5(mnav) + '%';
+  marker.setAttribute('data-label', fmtMnav(mnav));
+  let color = 'var(--green)';
+  if      (mnav >= 4.5) color = 'var(--red)';
+  else if (mnav >= 3.5) color = 'var(--orange)';
+  else if (mnav >= 2.5) color = 'var(--yellow)';
+  else if (mnav >= 1.5) color = 'var(--cyan)';
   mnavEl.textContent = fmtMnav(mnav);
   mnavEl.style.color = color;
 }
@@ -1134,8 +1187,8 @@ function updateStats() {
   setStatVal('mstrPriceStat', liveMstrPrice ? fmt$(liveMstrPrice, 2) : '—', 'mstr-color');
   if (liveMstrPrice) {
     const mn = calcMnav(MSTR_DATA, liveMstrPrice, btcP);
-    setStatMnav('mstrMnavStat', mn, 2.0, 2.5);
-    updateZone('mstrZoneMarker','mstrZoneMnav', mn, 2.0, 2.5);
+    setStatMnav('mstrMnavStat', mn, 2.0, 3.0);
+    updateZoneMstr('mstrZoneMarker','mstrZoneMnav', mn);
   }
 
   setStatVal('metaPriceStat', liveMetaPrice ? fmt$(liveMetaPrice) : '—', 'meta-color');
@@ -1154,7 +1207,8 @@ function updateStats() {
 
   // Chart panel mini stats
   document.getElementById('mstr1xLive').textContent  = fmt$(fv(MSTR_DATA,1,btcP), 2);
-  document.getElementById('mstr2xLive').textContent  = fmt$(fv(MSTR_DATA,2,btcP), 2);
+  document.getElementById('mstr3xLive').textContent  = fmt$(fv(MSTR_DATA,3,btcP), 2);
+  document.getElementById('mstr5xLive').textContent  = fmt$(fv(MSTR_DATA,5,btcP), 2);
   document.getElementById('meta1xLive').textContent  = fmt$(fv(META_DATA,1,btcP));
   document.getElementById('meta25xLive').textContent = fmt$(fv(META_DATA,2.5,btcP));
   document.getElementById('asst1xLive').textContent  = fmt$(fv(ASST_DATA,1,btcP), 2);
@@ -1227,10 +1281,12 @@ function buildCharts() {
   charts.mstr = new Chart(document.getElementById('mstrChart').getContext('2d'), {
     type:'line',
     data:{ labels:BTC_RANGE, datasets:[
-      {label:'1× mNAV', data:BTC_RANGE.map(b=>fv(MSTR_DATA,1,b)), borderColor:'rgba(34,212,122,0.9)', backgroundColor:'transparent', borderWidth:2, pointRadius:0, tension:0.3},
-      {label:'2× mNAV', data:BTC_RANGE.map(b=>fv(MSTR_DATA,2,b)), borderColor:'rgba(245,197,66,0.9)', backgroundColor:'transparent', borderWidth:2, pointRadius:0, tension:0.3},
-      {label:'3× mNAV', data:BTC_RANGE.map(b=>fv(MSTR_DATA,3,b)), borderColor:'rgba(255,77,109,0.9)', backgroundColor:'transparent', borderWidth:2, pointRadius:0, tension:0.3},
-      {label:'MSTR',    data:BTC_RANGE.map(()=>liveMstrPrice||null), borderColor:'rgba(255,255,255,0.4)', borderDash:[5,4], backgroundColor:'transparent', borderWidth:1.5, pointRadius:0}
+      {label:'1× Bear',        data:BTC_RANGE.map(b=>fv(MSTR_DATA,1,b)), borderColor:'rgba(34,212,122,0.9)', backgroundColor:'transparent', borderWidth:1.8, pointRadius:0, tension:0.3},
+      {label:'2× Conservative',data:BTC_RANGE.map(b=>fv(MSTR_DATA,2,b)), borderColor:'rgba(0,212,255,0.9)',  backgroundColor:'transparent', borderWidth:1.8, pointRadius:0, tension:0.3},
+      {label:'3× Base',        data:BTC_RANGE.map(b=>fv(MSTR_DATA,3,b)), borderColor:'rgba(245,197,66,0.9)', backgroundColor:'transparent', borderWidth:2.2, pointRadius:0, tension:0.3},
+      {label:'4× Bull',        data:BTC_RANGE.map(b=>fv(MSTR_DATA,4,b)), borderColor:'rgba(255,140,0,0.9)',  backgroundColor:'transparent', borderWidth:1.8, pointRadius:0, tension:0.3},
+      {label:'5× Ultra Bull',  data:BTC_RANGE.map(b=>fv(MSTR_DATA,5,b)), borderColor:'rgba(255,77,109,0.9)', backgroundColor:'transparent', borderWidth:1.8, pointRadius:0, tension:0.3},
+      {label:'MSTR',           data:BTC_RANGE.map(()=>liveMstrPrice||null), borderColor:'rgba(255,255,255,0.4)', borderDash:[5,4], backgroundColor:'transparent', borderWidth:1.5, pointRadius:0}
     ]},
     options: makeChartOpts(fmtBig)
   });
@@ -1260,7 +1316,7 @@ function buildCharts() {
 
 function updateChartLines() {
   if (!charts.mstr) return;
-  charts.mstr.data.datasets[3].data = BTC_RANGE.map(() => liveMstrPrice || null);
+  charts.mstr.data.datasets[5].data = BTC_RANGE.map(() => liveMstrPrice || null); // index 5 = price line (5 mNAV + 1 price)
   charts.meta.data.datasets[3].data = BTC_RANGE.map(() => liveMetaPrice || null);
   charts.asst.data.datasets[3].data = BTC_RANGE.map(() => liveAsstPrice || null);
   charts.mstr.update('none');
@@ -1380,13 +1436,13 @@ function updatePortfolio() {
     },
     base: {
       btcP: P,
-      mstrP: fv(MSTR_DATA, 2,   P),
+      mstrP: fv(MSTR_DATA, 3,   P),   // 3× Base
       metaP: fv(META_DATA, 2.5, P),
       asstP: fv(ASST_DATA, 2.5, P)
     },
     bull: {
       btcP: P,
-      mstrP: fv(MSTR_DATA, 3, P),
+      mstrP: fv(MSTR_DATA, 5, P),     // 5× Ultra Bull
       metaP: fv(META_DATA, 4, P),
       asstP: fv(ASST_DATA, 4, P)
     }
@@ -1490,7 +1546,7 @@ function updateCalcTable(targetP, inv, ep, scenarios, units, hasPrices) {
       unitLabel: 'shares',
       bearP: scenarios.bear.mstrP, baseP: scenarios.base.mstrP, bullP: scenarios.bull.mstrP,
       bearV: units.mstr*scenarios.bear.mstrP, baseV: units.mstr*scenarios.base.mstrP, bullV: units.mstr*scenarios.bull.mstrP,
-      note: '(1× / 2× / 3× mNAV)'
+      note: '(1× Bear / 3× Base / 5× Ultra Bull)'
     },
     {
       key:'meta', name:'Metaplanet', dot:'var(--meta)',
