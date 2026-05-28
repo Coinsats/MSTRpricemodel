@@ -589,6 +589,12 @@
     overflow: hidden;
   }
 
+  .proj-row.s-current {
+    background: rgba(255,255,255,0.07);
+    border-color: rgba(255,255,255,0.25);
+    border-width: 1px;
+  }
+
   .proj-row.s1 { background: rgba(34,212,122,0.08);  border-color: rgba(34,212,122,0.2);  }
   .proj-row.s2 { background: rgba(0,212,255,0.08);   border-color: rgba(0,212,255,0.2);   }
   .proj-row.s3 { background: rgba(245,197,66,0.08);  border-color: rgba(245,197,66,0.2);  }
@@ -811,9 +817,9 @@
   <!-- DATA SOURCES -->
   <div class="data-row">
     <div class="data-source-tag"><span class="dot"></span> BTC: CoinGecko API</div>
-    <div class="data-source-tag"><span class="dot"></span> Holdings: 843,738 BTC (MAY 18, 2026)</div>
-    <div class="data-source-tag"><span class="dot"></span> Basic Shares: 351.6M (MAY 18, 2026)</div>
-    <div class="data-source-tag"><span class="dot"></span> Diluted Shares: 383.5M</div>
+    <div class="data-source-tag"><span class="dot"></span> Holdings: 843,738 BTC (MAY 25, 2026)</div>
+    <div class="data-source-tag"><span class="dot"></span> Basic Shares: 351.7M · Assumed Diluted: 381.95M</div>
+    <div class="data-source-tag"><span class="dot"></span> BTC/Share: 220,900 sats · EV mNAV methodology</div>
   </div>
 
   <!-- MAIN STATS ROW -->
@@ -923,6 +929,7 @@
         <div class="legend-item"><div class="legend-dot" style="background:#f5c542"></div> 3× Base</div>
         <div class="legend-item"><div class="legend-dot" style="background:#ff8c00"></div> 4× Bull</div>
         <div class="legend-item"><div class="legend-dot" style="background:#ff4d6d"></div> 5× Ultra Bull</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--btc);border-top:1px dashed var(--btc)"></div> Current mNAV</div>
         <div class="legend-item"><div class="legend-dot" style="background:rgba(255,255,255,0.5);border-top:1px dashed rgba(255,255,255,0.4)"></div> MSTR price</div>
       </div>
       <div class="chart-container">
@@ -953,6 +960,17 @@
       </div>
 
       <div class="proj-results">
+        <!-- CURRENT mNAV ROW -->
+        <div class="proj-row s-current">
+          <div>
+            <div class="proj-mnav" style="color:var(--text)">Current mNAV · <span id="projCurrentMnavLabel" style="color:var(--btc)">—</span></div>
+            <div class="proj-zone">Live EV-Based · Matches Strategy</div>
+          </div>
+          <div>
+            <div class="proj-price white-color" id="projCurrentX">—</div>
+            <div class="proj-updown" id="projCurrentXUpdown">—</div>
+          </div>
+        </div>
         <div class="proj-row s1">
           <div>
             <div class="proj-mnav" style="color:var(--green)">1× mNAV · Bear</div>
@@ -1008,8 +1026,10 @@
       <div style="margin-top:12px;padding:10px 12px;background:var(--surface);border-radius:8px;border:1px solid var(--border)">
         <div style="font-family:var(--mono);font-size:9px;color:var(--text-muted);line-height:1.7">
           <div>₿ Holdings: <span style="color:var(--text)">843,738 BTC</span></div>
-          <div>Basic Shares: <span style="color:var(--text)">351.6M</span></div>
-          <div>BTC/Share: <span style="color:var(--btc)" id="sidebarBtcPerShare">—</span></div>
+          <div>Basic Shares: <span style="color:var(--text)">351.70M</span></div>
+          <div>Assumed Diluted: <span style="color:var(--text)">381.95M</span></div>
+          <div>BTC/Share (diluted): <span style="color:var(--btc)" id="sidebarBtcPerShare">—</span></div>
+          <div style="margin-top:4px;padding-top:4px;border-top:1px solid var(--border)">Debt+Pref−Cash: <span style="color:var(--red)">$21.36B</span></div>
         </div>
       </div>
     </div>
@@ -1026,29 +1046,45 @@
     <div class="metric-item">
       <div class="metric-label">Market Cap</div>
       <div class="metric-value white-color" id="metricMarketCap">—</div>
-      <div class="metric-sub">MSTR Price × 351.6M shares</div>
+      <div class="metric-sub">MSTR Price × 351.70M basic shares</div>
     </div>
     <div class="metric-item">
-      <div class="metric-label">mNAV (Mkt Cap / BTC NAV)</div>
+      <div class="metric-label">Enterprise Value</div>
+      <div class="metric-value white-color" id="metricEV">—</div>
+      <div class="metric-sub">Mkt Cap + Debt + Pref − Cash</div>
+    </div>
+    <div class="metric-item">
+      <div class="metric-label">mNAV — EV-Based <span style="font-size:8px;color:var(--btc);letter-spacing:0">(matches Strategy)</span></div>
+      <div class="metric-value" id="metricMnavEV" style="color:var(--yellow)">—</div>
+      <div class="metric-sub" id="metricMnavEVNote">Enterprise Value ÷ BTC NAV</div>
+    </div>
+    <div class="metric-item">
+      <div class="metric-label">mNAV — MC-Based <span style="font-size:8px;color:var(--text-muted);letter-spacing:0">(simple)</span></div>
       <div class="metric-value" id="metricMnav" style="color:var(--yellow)">—</div>
-      <div class="metric-sub" id="metricMnavNote">Market Cap basis · excludes debt</div>
+      <div class="metric-sub" id="metricMnavNote">Market Cap ÷ BTC NAV</div>
     </div>
   </div>
 
   <!-- DISCLAIMER -->
   <div class="disclaimer">
     <span class="disclaimer-icon">⚠</span>
-    <span>Not financial advice. mNAV here = Market Cap ÷ BTC NAV (excludes debt & preferred). Strategy.com shows mNAV using Enterprise Value (EV = Mkt Cap + Debt $8.3B + Preferred $13.5B − Cash $2.3B), which gives a higher reading (~1.28× at current prices). Scenarios: Bear 1×, Conservative 2×, Base 3×, Bull 4×, Ultra Bull 5×. BTC holdings and share count from Strategy Inc SEC filings (MAY 18, 2026). Always verify at strategy.com.</span>
+    <span>Not financial advice. <strong>EV mNAV</strong> (matches Strategy.com) = Enterprise Value ÷ BTC NAV, where EV = Market Cap + Debt ($6.75B) + Preferred ($15.48B) − Cash ($0.87B). <strong>MC mNAV</strong> (simple) = Market Cap ÷ BTC NAV. All MSTR price calculations and scenarios use EV-based methodology. <strong>BTC/Share</strong> uses Assumed Diluted Shares Outstanding (381.95M) per Strategy.com, giving 220,900 sats/share. Data from Strategy Inc SEC filings &amp; Strategy.com (MAY 25, 2026). Always verify at strategy.com.</span>
   </div>
 
 </div><!-- end page-wrap -->
 
 <script>
 // ── CONSTANTS ──
-const BTC_HOLDINGS = 818334;          // MAY 18, 2026 — Strategy Inc
-const SHARES_OUT   = 350945000;       // Basic shares outstanding, MAY 18, 2026
-const BTC_PER_SHARE = BTC_HOLDINGS / SHARES_OUT;
-const SATS_PER_BTC  = 100000000;
+const BTC_HOLDINGS   = 843738;           // MAY 25, 2026 — Strategy Inc
+const BASIC_SHARES   = 351696000;        // Basic shares outstanding — for Market Cap / EV / price calcs
+const DILUTED_SHARES = 381954000;        // Assumed Diluted shares — for BTC/share display (matches Strategy)
+const BTC_PER_SHARE  = BTC_HOLDINGS / DILUTED_SHARES;  // ~0.002209 BTC = 220,900 sats
+const SATS_PER_BTC   = 100000000;
+// EV components (from Strategy dashboard MAY 25, 2026)
+const DEBT_USD = 6754e6;    // $6.754B
+const PREF_USD = 15478e6;   // $15.478B preferred
+const CASH_USD = 871e6;     // $0.871B USD reserve
+const NET_DEBT = DEBT_USD + PREF_USD - CASH_USD;  // ~$21.361B
 
 // 5 mNAV scenarios
 const SCENARIOS = [
@@ -1061,6 +1097,7 @@ const SCENARIOS = [
 
 let liveBtcPrice  = 82000;
 let liveMstrPrice = null;
+let liveEVMnav    = 1.20;   // updated from live data; used by current-mNAV projector row
 let chartInstance = null;
 let sliderBtcPrice = 80000;
 
@@ -1134,10 +1171,15 @@ function applyManualMSTR() {
 }
 
 // ── CORE CALCULATIONS ──
-function calcBtcNav(btcPrice)          { return BTC_HOLDINGS * btcPrice; }
-function calcMarketCap(mstrPrice)      { return SHARES_OUT * mstrPrice; }
-function calcMnav(mstrPrice, btcPrice) { return calcMarketCap(mstrPrice) / calcBtcNav(btcPrice); }
-function calcFairValue(mnav, btcPrice) { return (mnav * calcBtcNav(btcPrice)) / SHARES_OUT; }
+function calcBtcNav(btcPrice)             { return BTC_HOLDINGS * btcPrice; }
+function calcMarketCap(mstrPrice)         { return BASIC_SHARES * mstrPrice; }
+function calcEV(mstrPrice)                { return calcMarketCap(mstrPrice) + NET_DEBT; }
+// EV-based mNAV — matches Strategy.com dashboard
+function calcMnavEV(mstrPrice, btcPrice)  { return calcEV(mstrPrice) / calcBtcNav(btcPrice); }
+// Simple MC-based mNAV — reference only
+function calcMnavMC(mstrPrice, btcPrice)  { return calcMarketCap(mstrPrice) / calcBtcNav(btcPrice); }
+// Fair value uses EV methodology: EV = mNAV × BTC_NAV → MarketCap = EV − NET_DEBT → Price = MC / BASIC_SHARES
+function calcFairValue(mnav, btcPrice)    { return Math.max(0, (mnav * calcBtcNav(btcPrice) - NET_DEBT) / BASIC_SHARES); }
 
 // ── ZONE MARKER ──
 // Bar layout: 5 segments with flex 2, 2, 1.5, 1.5, 1 = 8 total
@@ -1185,42 +1227,60 @@ function updateAll() {
     document.getElementById('mstrPrice').textContent = '—';
   }
 
-  // BTC NAV & Market Cap
+  // BTC NAV & Market Cap & EV
   const btcNav = calcBtcNav(btcPrice);
   const mktCap = mstrPrice !== null ? calcMarketCap(mstrPrice) : null;
+  const ev     = mstrPrice !== null ? calcEV(mstrPrice) : null;
 
   // Bottom metrics card
   document.getElementById('metricBtcNav').textContent = fmt$(btcNav);
 
   if (mktCap !== null) {
     document.getElementById('metricMarketCap').textContent = fmt$(mktCap);
-    const mnav = mktCap / btcNav;
-    document.getElementById('metricMnav').textContent = mnav.toFixed(3) + '×';
+    document.getElementById('metricEV').textContent = fmt$(ev);
 
+    // EV-based mNAV (primary — matches Strategy)
+    const mnavEV = calcMnavEV(mstrPrice, btcPrice);
+    liveEVMnav = mnavEV;
+    const mnavEVEl = document.getElementById('metricMnavEV');
+    mnavEVEl.textContent = mnavEV.toFixed(3) + '×';
     let mnavColor = 'var(--green)';
-    if      (mnav >= 4.5) mnavColor = 'var(--red)';
-    else if (mnav >= 3.5) mnavColor = 'var(--orange)';
-    else if (mnav >= 2.5) mnavColor = 'var(--yellow)';
-    else if (mnav >= 1.5) mnavColor = 'var(--cyan)';
-    document.getElementById('metricMnav').style.color = mnavColor;
+    if      (mnavEV >= 4.5) mnavColor = 'var(--red)';
+    else if (mnavEV >= 3.5) mnavColor = 'var(--orange)';
+    else if (mnavEV >= 2.5) mnavColor = 'var(--yellow)';
+    else if (mnavEV >= 1.5) mnavColor = 'var(--cyan)';
+    mnavEVEl.style.color = mnavColor;
+
+    // MC-based mNAV (simple reference)
+    const mnavMC = calcMnavMC(mstrPrice, btcPrice);
+    const mnavMCEl = document.getElementById('metricMnav');
+    mnavMCEl.textContent = mnavMC.toFixed(3) + '×';
+    let mnavMCColor = 'var(--green)';
+    if      (mnavMC >= 4.5) mnavMCColor = 'var(--red)';
+    else if (mnavMC >= 3.5) mnavMCColor = 'var(--orange)';
+    else if (mnavMC >= 2.5) mnavMCColor = 'var(--yellow)';
+    else if (mnavMC >= 1.5) mnavMCColor = 'var(--cyan)';
+    mnavMCEl.style.color = mnavMCColor;
   } else {
     document.getElementById('metricMarketCap').textContent = '—';
+    document.getElementById('metricEV').textContent = '—';
+    document.getElementById('metricMnavEV').textContent = '—';
     document.getElementById('metricMnav').textContent = '—';
   }
 
-  // Sidebar BTC/share
-  document.getElementById('sidebarBtcPerShare').textContent = BTC_PER_SHARE.toFixed(6);
+  // Sidebar BTC/share (uses diluted shares)
+  document.getElementById('sidebarBtcPerShare').textContent = BTC_PER_SHARE.toFixed(6) + ' (' + Math.round(BTC_PER_SHARE * SATS_PER_BTC).toLocaleString() + ' sats)';
 
-  // Scenario fair values (stats row)
+  // Scenario fair values (stats row) — EV-based
   document.getElementById('fv1x').textContent = fmt$(calcFairValue(1, btcPrice), 2);
   document.getElementById('fv2x').textContent = fmt$(calcFairValue(2, btcPrice), 2);
   document.getElementById('fv3x').textContent = fmt$(calcFairValue(3, btcPrice), 2);
   document.getElementById('fv4x').textContent = fmt$(calcFairValue(4, btcPrice), 2);
   document.getElementById('fv5x').textContent = fmt$(calcFairValue(5, btcPrice), 2);
 
-  // mNAV + zone gauge
+  // mNAV + zone gauge — use EV-based mNAV
   if (mstrPrice !== null) {
-    const mnav = calcMnav(mstrPrice, btcPrice);
+    const mnav = calcMnavEV(mstrPrice, btcPrice);
     const mnavEl = document.getElementById('mnavValue');
     mnavEl.textContent = mnav.toFixed(3) + '×';
 
@@ -1237,18 +1297,18 @@ function updateAll() {
     document.getElementById('zonesLabel').textContent = zoneText;
     updateZoneMarker(mnav);
 
-    // vs NAV premium/discount
+    // vs NAV premium/discount (EV-based)
     const prem = (mnav - 1) * 100;
     const underEl    = document.getElementById('undervalued');
     const underLabel = document.getElementById('undervaluedLabel');
     if (prem >= 0) {
       underEl.textContent = '+' + prem.toFixed(1) + '%';
       underEl.style.color = prem > 150 ? 'var(--red)' : prem > 50 ? 'var(--yellow)' : 'var(--cyan)';
-      underLabel.textContent = 'Premium to BTC NAV';
+      underLabel.textContent = 'EV Premium to BTC NAV';
     } else {
       underEl.textContent = prem.toFixed(1) + '%';
       underEl.style.color = 'var(--green)';
-      underLabel.textContent = 'Discount to BTC NAV';
+      underLabel.textContent = 'EV Discount to BTC NAV';
     }
   }
 
@@ -1263,6 +1323,17 @@ function updateSlider() {
   const mstrP = liveMstrPrice;
 
   document.getElementById('sliderBtcDisplay').textContent = fmt$(btcP);
+
+  // Current mNAV row (EV-based live mNAV applied to slider BTC price)
+  const currentMnavPrice = calcFairValue(liveEVMnav, btcP);
+  document.getElementById('projCurrentX').textContent = fmt$(currentMnavPrice, 2);
+  document.getElementById('projCurrentMnavLabel').textContent = liveEVMnav.toFixed(3) + '×';
+  if (mstrP) {
+    const upPct = ((currentMnavPrice - mstrP) / mstrP) * 100;
+    const el = document.getElementById('projCurrentXUpdown');
+    el.textContent = (upPct > 0 ? '▲ ' : '▼ ') + Math.abs(upPct).toFixed(1) + '% from current';
+    el.style.color = upPct > 0 ? 'var(--green)' : 'var(--red)';
+  }
 
   const prices = SCENARIOS.map(s => calcFairValue(s.mnav, btcP));
 
@@ -1306,6 +1377,19 @@ function buildChart(btcPrice, mstrPrice) {
   gradBase.addColorStop(1, 'transparent');
   datasets[2].backgroundColor = gradBase;
   datasets[2].fill = 'origin';
+
+  // Current mNAV line
+  datasets.push({
+    label: `Current mNAV (${liveEVMnav.toFixed(2)}×)`,
+    data: btcRange.map(b => calcFairValue(liveEVMnav, b)),
+    borderColor: 'rgba(247,147,26,0.85)',
+    backgroundColor: 'transparent',
+    borderWidth: 2,
+    borderDash: [6, 3],
+    pointRadius: 0,
+    fill: false,
+    tension: 0.3,
+  });
 
   if (mstrPrice) {
     datasets.push({
@@ -1377,7 +1461,14 @@ function updateChart(btcPrice, mstrPrice) {
     chartInstance.data.datasets[i].data = btcRange.map(b => calcFairValue(s.mnav, b));
   });
 
-  const mstrDatasetIdx = SCENARIOS.length;
+  // Current mNAV line (index = SCENARIOS.length)
+  const currentMnavIdx = SCENARIOS.length;
+  if (chartInstance.data.datasets[currentMnavIdx]) {
+    chartInstance.data.datasets[currentMnavIdx].data = btcRange.map(b => calcFairValue(liveEVMnav, b));
+    chartInstance.data.datasets[currentMnavIdx].label = `Current mNAV (${liveEVMnav.toFixed(2)}×)`;
+  }
+
+  const mstrDatasetIdx = SCENARIOS.length + 1;
   if (mstrPrice) {
     if (chartInstance.data.datasets[mstrDatasetIdx]) {
       chartInstance.data.datasets[mstrDatasetIdx].data = btcRange.map(() => mstrPrice);
