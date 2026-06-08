@@ -817,8 +817,8 @@
   <!-- DATA SOURCES -->
   <div class="data-row">
     <div class="data-source-tag"><span class="dot"></span> BTC: CoinGecko API</div>
-    <div class="data-source-tag"><span class="dot"></span> Holdings: 843,738 BTC (MAY 25, 2026)</div>
-    <div class="data-source-tag"><span class="dot"></span> Basic Shares: 351.7M · Assumed Diluted: 381.95M</div>
+    <div class="data-source-tag"><span class="dot"></span> Holdings: 845,256 BTC (JUN 25, 2026)</div>
+    <div class="data-source-tag"><span class="dot"></span> Basic Shares: 354.2M · Assumed Diluted: 384.18M</div>
     <div class="data-source-tag"><span class="dot"></span> BTC/Share: 220,900 sats · EV mNAV methodology</div>
   </div>
 
@@ -1025,7 +1025,7 @@
 
       <div style="margin-top:12px;padding:10px 12px;background:var(--surface);border-radius:8px;border:1px solid var(--border)">
         <div style="font-family:var(--mono);font-size:9px;color:var(--text-muted);line-height:1.7">
-          <div>₿ Holdings: <span style="color:var(--text)">843,738 BTC</span></div>
+          <div>₿ Holdings: <span style="color:var(--text)">845,256 BTC</span></div>
           <div>Basic Shares: <span style="color:var(--text)">351.70M</span></div>
           <div>Assumed Diluted: <span style="color:var(--text)">381.95M</span></div>
           <div>BTC/Share (diluted): <span style="color:var(--btc)" id="sidebarBtcPerShare">—</span></div>
@@ -1041,7 +1041,7 @@
     <div class="metric-item">
       <div class="metric-label">BTC NAV</div>
       <div class="metric-value btc-color" id="metricBtcNav">—</div>
-      <div class="metric-sub">BTC Price × 843,738 holdings</div>
+      <div class="metric-sub">BTC Price × 845,256 holdings</div>
     </div>
     <div class="metric-item">
       <div class="metric-label">Market Cap</div>
@@ -1068,19 +1068,19 @@
   <!-- DISCLAIMER -->
   <div class="disclaimer">
     <span class="disclaimer-icon">⚠</span>
-    <span>Not financial advice. <strong>EV mNAV</strong> (matches Strategy.com) = Enterprise Value ÷ BTC NAV, where EV = Market Cap + Debt ($6.75B) + Preferred ($15.48B) − Cash ($0.87B). <strong>MC mNAV</strong> (simple) = Market Cap ÷ BTC NAV. All MSTR price calculations and scenarios use EV-based methodology. <strong>BTC/Share</strong> uses Assumed Diluted Shares Outstanding (381.95M) per Strategy.com, giving 220,900 sats/share. Data from Strategy Inc SEC filings &amp; Strategy.com (MAY 25, 2026). Always verify at strategy.com.</span>
+    <span>Not financial advice. <strong>EV mNAV</strong> (matches Strategy.com) = Enterprise Value ÷ BTC NAV, where EV = Market Cap + Debt ($6.75B) + Preferred ($15.48B) − Cash ($0.87B). <strong>MC mNAV</strong> (simple) = Market Cap ÷ BTC NAV. All MSTR price calculations and scenarios use EV-based methodology. <strong>BTC/Share</strong> uses Assumed Diluted Shares Outstanding (381.95M) per Strategy.com, giving 220,900 sats/share. Data from Strategy Inc SEC filings &amp; Strategy.com (JUN 25, 2026). Always verify at strategy.com.</span>
   </div>
 
 </div><!-- end page-wrap -->
 
 <script>
 // ── CONSTANTS ──
-const BTC_HOLDINGS   = 843738;           // MAY 25, 2026 — Strategy Inc
+const BTC_HOLDINGS   = 843738;           // JUN 25, 2026 — Strategy Inc
 const BASIC_SHARES   = 351696000;        // Basic shares outstanding — for Market Cap / EV / price calcs
 const DILUTED_SHARES = 381954000;        // Assumed Diluted shares — for BTC/share display (matches Strategy)
 const BTC_PER_SHARE  = BTC_HOLDINGS / DILUTED_SHARES;  // ~0.002209 BTC = 220,900 sats
 const SATS_PER_BTC   = 100000000;
-// EV components (from Strategy dashboard MAY 25, 2026)
+// EV components (from Strategy dashboard JUN 25, 2026)
 const DEBT_USD = 6754e6;    // $6.754B
 const PREF_USD = 15478e6;   // $15.478B preferred
 const CASH_USD = 871e6;     // $0.871B USD reserve
